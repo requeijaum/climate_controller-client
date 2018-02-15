@@ -1,6 +1,7 @@
 # climate_controller-client
 
 Cliente de um protótipo de climatizador feito enquanto eu estagiava no Hospital Martagão Gesteira, em 2017.
+
 Feito com Ionic 3 e Cordova.
 
 ----
