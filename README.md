@@ -15,9 +15,9 @@ Inicie um projeto em branco com o Ionic CLI e dê um git pull dentro da pasta do
 
 >https://github.com/don/BluetoothSerial
 
-'''
+```
 cordova plugin add cordova-plugin-bluetooth-serial
-'''
+```
 
 ----
 
