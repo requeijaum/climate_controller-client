@@ -1,0 +1,165 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <button ion-button icon-only>
+					<ion-icon name="menu">
+					</ion-icon>
+				</button>
+    </button>
+    <ion-title>Horários</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="grid-basic-page">
+
+	<!-- CSS obrigatório -->
+
+	<h2>
+		Programação de horários
+	</h2>
+
+  <!--
+	<p> Debug: variaveis global
+		<br> mask: {{global.mask}}
+
+		<br><br> dom: {{global.dias.dom}} , seg: {{global.dias.seg}} , ter: {{global.dias.ter}} , qua: {{global.dias.qua}} ,
+		<br> qui: {{global.dias.qui}} , sex: {{global.dias.sex}} , sab: {{global.dias.sab}}
+
+		<br><br> pl1:{{global.pl1}} pl2:{{global.pl2}} <br> pd1:{{global.pd1}} pd2:{{global.pd2}}
+	</p>
+
+
+	<p><br/></p>
+	-->
+
+	<ion-grid>
+		<ion-row>
+
+			<ion-col>
+				<p>Turno Matutino</p>
+			</ion-col>
+
+
+			<ion-col>
+				<p>Turno Vespertino</p>
+			</ion-col>
+
+		</ion-row>
+
+		<ion-row>
+			<ion-col>
+				<button ion-button outline block >
+
+					<ion-datetime displayFormat="H:mm" pickerFormat="H mm" cancelText="CANCELAR" DoneText="OK" [(ngModel)]="event.PL1">
+					</ion-datetime>
+
+				</button>
+			</ion-col>
+
+			<ion-col>
+				<button ion-button outline block >
+					<ion-datetime displayFormat="H:mm" pickerFormat="H mm" cancelText="CANCELAR" DoneText="OK" [(ngModel)]="event.PL2">
+					</ion-datetime>
+				</button>
+			</ion-col>
+
+		</ion-row>
+
+		<ion-row>
+			<ion-col>
+				<button ion-button outline block >
+					<ion-datetime displayFormat="H:mm" pickerFormat="H mm" cancelText="CANCELAR" DoneText="OK" [(ngModel)]="event.PD1">
+					</ion-datetime>
+				</button>
+			</ion-col>
+
+			<ion-col>
+				<button ion-button outline block >
+					<ion-datetime displayFormat="H:mm" pickerFormat="H mm" cancelText="CANCELAR" DoneText="OK" [(ngModel)]="event.PD2">
+					</ion-datetime>
+				</button>
+			</ion-col>
+
+		</ion-row>
+
+		<!-- check boxes pro dia, hehe -->
+
+		<p><br/></p>
+
+		<h2>Dias em que o sistema deve ligar</h2>
+
+		<!-- tentar bloquear input pra não alterar as checkboxes -->
+		<!-- so tenho problema ao entrar na page pela I vez -->
+
+		<ion-row justify-items-left padding>
+
+
+				<ion-item>
+					<ion-label>Segunda-feira</ion-label>
+					<ion-radio [checked]="dias.seg" [disabled]="!dias.seg">
+					</ion-radio>
+				</ion-item>
+
+				<ion-item>
+					<ion-label>Terça-feira</ion-label>
+					<ion-radio [checked]="dias.ter" [disabled]="!dias.ter">
+					</ion-radio>
+				</ion-item>
+
+				<ion-item>
+					<ion-label>Quarta-feira</ion-label>
+					<ion-radio [checked]="dias.qua" [disabled]="!dias.qua">
+					</ion-radio>
+				</ion-item>
+
+				<ion-item>
+					<ion-label>Quinta-feira</ion-label>
+					<ion-radio [checked]="dias.qui" [disabled]="!dias.qui">
+					</ion-radio>
+				</ion-item>
+
+				<ion-item>
+					<ion-label>Sexta-feira</ion-label>
+					<ion-radio [checked]="dias.sex" [disabled]="!dias.sex">
+					</ion-radio>
+				</ion-item>
+
+				<ion-item>
+					<ion-label>Sábado</ion-label>
+					<ion-radio [checked]="dias.sab" [disabled]="!dias.sab">
+					</ion-radio>
+				</ion-item>
+
+				<ion-item>
+					<ion-label>Domingo</ion-label>
+					<ion-radio [checked]="dias.dom" [disabled]="!dias.dom">
+					</ion-radio>
+				</ion-item>
+
+		</ion-row>
+
+
+		<ion-row>
+
+			<ion-col> 							<!-- (ionChange) ou (click) ? -->
+			 <button ion-button style="padding: 64px;" color="danger" (click)="doCheckbox()">
+				Configurar Dias<br>
+				e ENVIAR
+			</button>
+			</ion-col>
+		</ion-row>
+
+		<ion-row>
+			<!--
+			<p class="aviso">
+				Para enviar a programação de horários: <br>
+				apertar OK após a seleção dos dias da semana.
+			</p>
+			-->
+		</ion-row>
+
+	</ion-grid>
+
+
+
+</ion-content>

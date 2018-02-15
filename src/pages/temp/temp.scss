@@ -1,0 +1,37 @@
+page-temp{
+
+}
+
+.grid-basic-page {
+
+	ion-col {
+		text-align: center;
+	}
+
+	ion-col div {
+		background-color: #f0f5ff;
+		border: 1px solid #e6e9ee;
+		border-radius: 2px;
+		padding: 5px;
+		text-align: center;
+		margin: 8px;
+	}
+
+	p {
+		padding: 10px 0 0 10px !important; 
+		margin: 0;
+	}
+	
+	h2 {
+		padding: 10px 0 0 10px !important;
+		margin: 8px;
+		font-size: medium;
+	}
+	
+	.presenca_icon {
+		padding: 10px 0 0 10px !important;
+		margin: 0px;
+		font-size: xx-large;
+	}
+
+}

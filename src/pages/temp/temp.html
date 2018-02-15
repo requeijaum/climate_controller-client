@@ -1,0 +1,149 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <button ion-button icon-only>
+					<ion-icon name="menu">
+					</ion-icon>
+				</button>
+    </button>
+    <ion-title>Temperatura</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="grid-basic-page">
+
+	<!-- CSS obrigatório -->
+
+	<!-- preciso atualizar as variáveis na tela... ngModel e event? -->
+	
+	<h2>
+		Leituras de temperatura em graus Celsius
+	</h2>
+	
+	<p><br/></p>
+	
+	
+	<ion-grid>
+
+		<ion-row>
+			<ion-col>
+				<button ion-button icon-only (click)="aumentou_Tmin()">
+					<ion-icon name="add">
+					</ion-icon>
+				</button>
+			</ion-col>
+
+			
+			<ion-col>
+			<!--
+				<button ion-button icon-only (click)="debug_presenca_on()">
+					<ion-icon name="add">
+					</ion-icon>
+				</button>
+			-->
+			</ion-col>
+			
+			<ion-col>
+				<button ion-button icon-only (click)="aumentou_Tmax()">
+					<ion-icon name="add">
+					</ion-icon>
+				</button>
+			</ion-col>			
+			
+		</ion-row>
+		
+		
+		
+		<ion-row>
+		  <ion-col style="color:blue">
+			<h3>{{global.t1}}ºC</h3>
+			Mínima
+		  </ion-col>
+		  <ion-col>
+			<!-- <div style="padding:32px;" [innerHTML]="t2"></div> -->
+			<h3>{{global.t2}}ºC</h3>
+			Atual
+		  </ion-col>
+		  <ion-col style="color:red">
+			<h3>{{global.t3}}ºC</h3>
+			Máxima
+		  </ion-col>
+		</ion-row>
+		
+		
+		
+		<ion-row>
+			<ion-col>
+				<button ion-button icon-only (click)="diminuiu_Tmin()">
+					<ion-icon name="remove">
+					</ion-icon>
+				</button>
+			</ion-col>
+
+			<ion-col>
+			<!-- 
+				<button ion-button icon-only (click)="debug_presenca_off()">
+					<ion-icon name="remove">
+					</ion-icon>
+				</button>
+			-->
+			</ion-col>
+			
+			<ion-col>
+				<button ion-button icon-only (click)="diminuiu_Tmax()">
+					<ion-icon name="remove">
+					</ion-icon>
+				</button>
+			</ion-col>			
+			
+		</ion-row>		
+		
+	</ion-grid>
+	
+	<p><br/></p>
+	
+	<ion-grid>
+		<ion-row>
+
+			
+			<ion-col>
+				
+				
+					<p><br/></p>
+					
+					<button ion-button style="padding:32px;" (click)="alterarTtrigger()">
+					Ajustar tempo de ação<br>do controlador
+					</button>
+				
+					
+
+					<h2>
+					Indicador de presença
+					</h2>
+					
+									
+					<ion-icon class="presenca_icon" [name]="global.presencaIcon" [isActive]="global.presencaState" [color]="global.presencaColor">
+					</ion-icon>
+					
+					<!--
+					<ion-icon class="presenca_icon" name="radio-button-on" isActive=true style="color:green">
+					</ion-icon>
+					
+					<ion-icon class="presenca_icon" name="radio-button-off" isActive=false style="color:red">
+					</ion-icon>					
+					-->
+					
+					<!--
+					<ion-icon name="heart"></ion-icon>                    <!-- active -->
+					<!-- 
+					<ion-icon name="heart" isActive="false"></ion-icon>   <!-- inactive -->
+					
+					
+					
+				
+			</ion-col>			
+			
+		</ion-row>
+	</ion-grid>
+
+</ion-content>
