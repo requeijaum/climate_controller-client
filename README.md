@@ -1,6 +1,6 @@
 # climate_controller-client
 
-Cliente de um protótipo de climatizador feito enquanto eu estagiava no Hospital Martagão Gesteira, em 2017.
+Cliente de um protótipo de climatizador. Projeto iniciado enquanto eu estagiava no Hospital Martagão Gesteira, em 2017.
 
 Feito com Ionic 3 e Cordova.
 
@@ -43,7 +43,7 @@ Depois:
 ## Contribuindo
 
 ### Não autorizo ninguém a utilizar esse código - apenas visualizá-lo.
-Por enquanto, como não disponibilizei licença: qualquer utilização, reprodução ou edição desse código expressamente PROIBIDO.
+Por enquanto, como não disponibilizei licença: qualquer utilização, reprodução ou edição desse código, **sem sua devida autorização**, está expressamente *PROIBIDA*.
 
 
 ----
@@ -52,3 +52,4 @@ Por enquanto, como não disponibilizei licença: qualquer utilização, reprodu�
 
 * Obrigado StackOverflow - por existir
 * Obrigado Victor Ben-Hur pela oportunidade e pelo desafio de testar meus conhecimentos.
+* Obrigado Lucas Borges pelas novas ideias para otimização.
