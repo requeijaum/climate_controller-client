@@ -39,6 +39,7 @@ export class TemperaturaPage {
 
 		{
 			platform.registerBackButtonAction( () => { this.voltar(); } , 1 );
+			this.contaComm = 0;
 
 			//bluetoothSerial.enable();
 			//bluetoothSerial.connect(this.address);
@@ -65,6 +66,8 @@ export class TemperaturaPage {
 	public recebido: string;
 	//public tempTimer: any;
 	public flagComm: boolean;
+
+	public contaComm: number;
 
 	public t1: any;
 	public t2: any;
@@ -197,11 +200,12 @@ export class TemperaturaPage {
 	//função importante pra carregar variáveis a partir do
 	//JSON recebido via Bluetooth
 	carregarVars(){
+		//this.contaComm = 0; //Reuniao: Contador para debug
+
 		if (this.global.flagComm == false) {
 			this.t1 	= this.global.getTMin();
 			this.t2 	= this.global.getTAtual();
 			this.t3 	= this.global.getTMax();
-
 		}
 
 		this.p 		= this.global.getPresenca();
@@ -239,6 +243,9 @@ export class TemperaturaPage {
 
 	public aumentou_Tmin(){
 		this.global.flagComm = true;
+		if(this.global.flagComm) {
+			this.contaComm++;
+		}
 		if( this.t3 - (this.t1+1) >= 2) {                             // Se o valor da temperatura máxima subtraído do aumento da Temperatura mínima feito resultar 
 			this.t1 += 1;                                             // em um número que seja maior ou  igual a temperatura máxima 2, o que não pode acontecer, 
 			this.texto = "\n { \"t1\": " + this.t1 + " } ";           // tendo em mente de que a temperatura  deve ficar entre os dois valores. Se a Tmin for 29 e a 
@@ -266,6 +273,9 @@ export class TemperaturaPage {
 
 	public aumentou_Tmax(){
 		this.global.flagComm = true;
+		if(this.global.flagComm) {
+			this.contaComm++;
+		}
 		if(this.t3+1 <30) {                                    // Se quando o aumento feito o resultado for menor do que 30, é possível fazer o aumento. 
 			this.t3 += 1;
 			this.texto = "\n { \"t3\": " + this.t3 + " } ";
@@ -292,6 +302,9 @@ export class TemperaturaPage {
 
 	public diminuiu_Tmin(){
 		this.global.flagComm = true;
+		if(this.global.flagComm) {
+			this.contaComm++;
+		}
 		if(this.t1-1 > 16) {
 			this.t1 -= 1;
 			this.texto = "\n { \"t1\": " + this.t1 + " } ";
@@ -318,6 +331,9 @@ export class TemperaturaPage {
 
 	public diminuiu_Tmax(){
 		this.global.flagComm = true;
+		if(this.global.flagComm) {
+			this.contaComm++;
+		}
 		if( (this.t3 -1) - this.t1 >= 2 ) {
 			this.t3 -= 1;
 			this.texto = "\n { \"t3\": " + this.t3 + " } ";
