@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Platform, MenuController, Nav } from 'ionic-angular';
+import { Platform, MenuController, Nav, AlertController } from 'ionic-angular';
 
 import { GlobalVariables } from '../providers/globalvars/globalvars';
 
@@ -44,8 +44,8 @@ export class MyApp {
 		public menu: 			MenuController,
 		public statusBar: 		StatusBar,
 		public splashScreen: 	SplashScreen,
-		public global: 			GlobalVariables
-		
+		public global: 			GlobalVariables,
+		public alertCtrl: AlertController
 	) 
 	{
 
@@ -78,8 +78,13 @@ export class MyApp {
 	
 		//nao vou parar esse timer nunca...	 
 		setInterval(() => { 
-			
-			this.testaConectado();
+				this.bluetoothSerial.isConnected()                                   // Verifica constantemente se o aplicativo está conectado ao dispositivo.
+				.then(() => {                                                        // e altera a variável global.
+								this.global.putBluetoothConectado(true);
+							}, (err) => {
+										this.global.putBluetoothConectado(false);
+										});
+			//this.testaConectado();
 			
 			console.log("app.component.ts - setInterval() funciona!");
 			this.JSONnovo = Object.assign( {}, this.global.JSONnovo);
@@ -181,7 +186,26 @@ export class MyApp {
     // close the menu when clicking a link from the menu
     this.menu.close();
     // navigate to the new page if it is not the current page
-    this.nav.setRoot(page.component);
+	if( (page.component == TemperaturaPage || page.component == HorarioPage) && this.global.getBluetoothConectado() == false ) {
+		let alert = this.alertCtrl.create( {
+				title: 'Erro',
+				message: 'Voce precisa se conectar ao dispositivo antes de acessar esta página.',
+				buttons: [ 
+				{ text: 'Ok',
+					handler: () => {
+						console.log('Clicou em Ok.');
+						if(this.nav.getActive().component != this.pages[1].component) {
+							this.openPage(this.pages[1]);
+							console.log('Abriu a página conectar a partir de: ' + this.nav.getActive().name );
+						}
+					}
+				} ]
+			} );
+			alert.present();
+	}
+	else {
+		this.nav.setRoot(page.component);
+	}
   }
   
     //https://github.com/don/BluetoothSerial/issues/222

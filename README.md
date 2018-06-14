@@ -29,6 +29,17 @@ Deixei um script pronto - necessita do ambiente Android Studio e uma SDK com API
 
 ----
 
+### Buildando o apk pelo terminal
+
+Na hora de buildar o apk ou testar o aplicativo com ionic serve, caso dê incompatibilidade com a arquitetura de seu computador atual rode os seguintes
+comandos no terminal:
+
+>npm uninstall --save node-sass
+
+Depois:
+
+>npm install --save node-sass
+
 ## Contribuindo
 
 ### Não autorizo ninguém a utilizar esse código - apenas visualizá-lo.

@@ -54,6 +54,10 @@ export class GlobalVariables {
 	public mask				: 	number;
 	public dias;    		//objeto JSON, hehe
 	public semana			: any;
+	
+	// Indica se o app está conectado ao dispositivo
+	public bluetooth_connected : boolean;
+	
 
 
 
@@ -124,6 +128,7 @@ export class GlobalVariables {
 			"t3":27,
 			"tt":5
 		}
+		this.bluetooth_connected = false;
 
 
 
@@ -234,7 +239,10 @@ export class GlobalVariables {
 		this.JSONnovo = JSONnovo ; //recebe e armazena na classe "global" ou "this.global"
 
 	}
-
+	// Bluetooth está conectado
+	getBluetoothConectado() { return this.bluetooth_connected; }
+	putBluetoothConectado(bluetooth_connected) { this.bluetooth_connected = bluetooth_connected; }
+	
 	getJSONnovo_typeof(){ return this.JSONnovo_typeof ;}
 	putJSONnovo_typeof(JSONnovo_typeof){ this.JSONnovo_typeof = JSONnovo_typeof;	}
 

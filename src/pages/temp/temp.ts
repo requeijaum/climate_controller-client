@@ -145,7 +145,7 @@ export class TemperaturaPage {
 
 	//-------------------------------------------------------------------------
 
-
+	/*
 	rangeTemp(){
 		//range das temps
 		//entre 15 e 30
@@ -178,7 +178,7 @@ export class TemperaturaPage {
 			console.log(this.texto);
 			this.bluetoothSerial.write(this.texto);
 		}
-	}
+	}	*/ //Acho que essa parte não do código não é mais necessária, mas devo confirmar com Rafael.
 
 
 
@@ -233,12 +233,26 @@ export class TemperaturaPage {
 
 	aumentou_Tmin(){
 		this.global.flagComm = true;
-
-		this.t1 += 1;
-		this.texto = "\n { \"t1\": " + this.t1 + " } ";
-		console.log(this.texto);
-		this.bluetoothSerial.write(this.texto);
-
+		if( this.t3 - (this.t1+1) >= 2) {                              // Se o valor da temperatura máxima subtraído do aumento da Temperatura mínima feito resultar 
+			this.t1 += 1;                                             // em um número que seja maior ou  igual a temperatura máxima 2, o que não pode acontecer, 
+			this.texto = "\n { \"t1\": " + this.t1 + " } ";           // tendo em mente de que a temperatura  deve ficar entre os dois valores. Se a Tmin for 29 e a 
+			console.log(this.texto);                                  // Tmax for 30. isso não será possível  já que não existe número inteiro entre 29 e 30. A não 
+			this.bluetoothSerial.write(this.texto);                   // ser que o código assuma 29 e 30 como parte do intervalo. Preciso averiguar.
+		}
+		else {
+			let alert = this.alertCtrl.create( {
+				title: 'Erro',
+				message: 'Deve existir um intervalo de pelo menos 1° Celsius entre a temperatura máxima e mínima.',
+				buttons: [ 
+				{ text: 'Ok',
+					handler: () => {
+						console.log('Clicou em Ok.');
+					}
+				} ]
+			} );
+			alert.present();
+				
+		}
 		this.global.flagComm = false;
 		//debug
 		//this.global.putTMin(this.t1);
@@ -246,12 +260,25 @@ export class TemperaturaPage {
 
 	aumentou_Tmax(){
 		this.global.flagComm = true;
-
-		this.t3 += 1;
-		this.texto = "\n { \"t3\": " + this.t3 + " } ";
-		console.log(this.texto);
-		this.bluetoothSerial.write(this.texto);
-
+		if(this.t3+1 <30) {                                    // Se quando o aumento feito o resultado for menor do que 30, é possível fazer o aumento. 
+			this.t3 += 1;
+			this.texto = "\n { \"t3\": " + this.t3 + " } ";
+			console.log(this.texto);
+			this.bluetoothSerial.write(this.texto);
+		}
+		else {                                                // Se o aumento feito resultar em uma temperatura maior do que 29, não se deve aumentar. Ou seja, não faz nada. TESTE
+			let alert = this.alertCtrl.create( {
+				title: 'Erro',
+				message: 'A temperatura máxima deve ser menor do que 30° Celsius.',
+				buttons: [ 
+				{ text: 'Ok',
+					handler: () => {
+						console.log('Clicou em Ok.');
+					}
+				} ]
+			} );
+			alert.present();
+		}
 		this.global.flagComm = false;
 		//debug
 		//this.global.putTMax(this.t3);
@@ -259,12 +286,25 @@ export class TemperaturaPage {
 
 	diminuiu_Tmin(){
 		this.global.flagComm = true;
-
-		this.t1 -= 1;
-		this.texto = "\n { \"t1\": " + this.t1 + " } ";
-		console.log(this.texto);
-		this.bluetoothSerial.write(this.texto);
-
+		if(this.t1-1 > 16) {
+			this.t1 -= 1;
+			this.texto = "\n { \"t1\": " + this.t1 + " } ";
+			console.log(this.texto);
+			this.bluetoothSerial.write(this.texto);
+		}
+		else {
+			let alert = this.alertCtrl.create( {
+				title: 'Erro',
+				message: 'A temperatura mínima deve ser maior do que 16° Celsius.',
+				buttons: [ 
+				{ text: 'Ok',
+					handler: () => {
+						console.log('Clicou em Ok.');
+					}
+				} ]
+			} );
+			alert.present();
+		}
 		this.global.flagComm = false;
 		//debug
 		//this.global.putTMin(this.t1);
@@ -272,12 +312,25 @@ export class TemperaturaPage {
 
 	diminuiu_Tmax(){
 		this.global.flagComm = true;
-
-		this.t3 -= 1;
-		this.texto = "\n { \"t3\": " + this.t3 + " } ";
-		console.log(this.texto);
-		this.bluetoothSerial.write(this.texto);
-
+		if( (this.t3 -1) - this.t1 >= 2 ) {
+			this.t3 -= 1;
+			this.texto = "\n { \"t3\": " + this.t3 + " } ";
+			console.log(this.texto);
+			this.bluetoothSerial.write(this.texto);
+		}
+		else {
+			let alert = this.alertCtrl.create( {
+				title: 'Erro',
+				message: 'Deve existir um intervalo de pelo menos 1° Celsius entre a temperatura máxima e mínima.',
+				buttons: [ 
+				{ text: 'Ok',
+					handler: () => {
+						console.log('Clicou em Ok.');
+					}
+				} ]
+			} );
+			alert.present();
+		}
 		this.global.flagComm = false;
 		//debug
 		//this.global.putTMax(this.t3);
