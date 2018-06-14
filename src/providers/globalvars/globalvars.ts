@@ -29,7 +29,7 @@ export class GlobalVariables {
 	public flagComm			:boolean;
 
 	public texto			: 	string;
-	public recebido			:string;
+	public recebido			: any;
 	public conectado		: boolean;
 
 	public JSONnovo;
@@ -66,6 +66,10 @@ export class GlobalVariables {
 	public presencaIcon : string;
 	public presencaState: boolean;
 	public presencaColor: string;
+
+
+	//declarar var
+	public ObjetoNovo_length: number;
 
 
 	constructor(){
@@ -245,5 +249,11 @@ export class GlobalVariables {
 	
 	getJSONnovo_typeof(){ return this.JSONnovo_typeof ;}
 	putJSONnovo_typeof(JSONnovo_typeof){ this.JSONnovo_typeof = JSONnovo_typeof;	}
+
+
+	//Reunião: testar buffer completo com bluetoothSerial.readUntil()
+	getObjetoNovo_length() { return this.ObjetoNovo_length; }
+	putObjetoNovo_length(ObjetoNovo_length) {this.ObjetoNovo_length = ObjetoNovo_length; }
+	
 
 }

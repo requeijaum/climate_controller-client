@@ -8,6 +8,7 @@ import { WelcomePage } from '../pages/01bemvindo/01bemvindo';
 import { ConectarPage } from '../pages/02conectar/02conectar';
 import { TemperaturaPage } from '../pages/temp/temp';
 import { HorarioPage } from '../pages/hora/hora';
+import { DebugPage } from '../pages/debug/debug';
 
 //import { CommTestPage } from '../pages/commtest/commtest';
 //import { GridPage } from '../pages/flexbox/flexbox';
@@ -18,6 +19,9 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { BluetoothSerial } from '@ionic-native/bluetooth-serial';
+
+
+
 
 
 
@@ -57,6 +61,7 @@ export class MyApp {
 		{ title: 'Conectar dispositivo'			, component: ConectarPage },
 		{ title: 'Temperatura'					, component: TemperaturaPage },
 		{ title: 'Horários de acionamento'		, component: HorarioPage },
+		{title: 'Pagina de Debug'               , component: DebugPage	},
 		//{ title: 'CommTest'						, component: CommTestPage },
 		//{ title: 'GridPage'						, component: GridPage },
 		//{ title: 'My First List'				, component: ListPage },
@@ -92,11 +97,12 @@ export class MyApp {
 			//funciona... mas no ionic serve (teste no Browser) da runtime error
 			//colocar um IF pra platform ou view?
 			
-			if (this.bluetoothSerial.isEnabled) {
+			if (this.bluetoothSerial.isEnabled && !this.global.flagComm) {
 				this.bluetoothSerial.subscribeRawData()
 					.subscribe(
 								(data) => { 
-									this.bluetoothSerial.read()
+									//this.bluetoothSerial.read()
+									this.bluetoothSerial.readUntil("}")
 										.then(
 											(data) => { 
 												this.global.recebido = data ; 
@@ -121,17 +127,44 @@ export class MyApp {
 		//a ArduinoJSON e Python3 usam aspas diferentes
 		//codigo unicode correspondente...
 
+		//Reunião: podemos otimizar isso no Observable anterior?
+
 		this.global.recebido = this.global.recebido.replace(/\u0027/g, '\u0022').replace(/[\r\n]/g, '');
 		
 		
+
+
 		//testar se o objeto que vai pra global está vazio
 		
 		//https://stackoverflow.com/questions/679915/how-do-i-test-for-an-empty-javascript-object
 		var ObjetoNovo = JSON.parse(this.global.recebido);
+
+		//implementar um promisse pra error handling
+		
+		this.global.putObjetoNovo_length (Object.getOwnPropertyNames(ObjetoNovo).length);
+		
+
 		
 		if ( Object.getOwnPropertyNames(ObjetoNovo).length == 0 ) {
 			console.log("ObjetoNovo \"JSON.parse(this.global.recebido está vazio!\" ");
+			/*
+			let alert = this.alertCtrl.create({                  // success = (data) => alert(data);
+				title: 'DEU MERDA',
+				message: 'QCU',
+				buttons: [
+				  {
+					text: 'Ok',
+					handler: () => {
+					  console.log('Apertou ok!');
+					}
+				  },
+				]
+			  });
+			  alert.present();
+			  */
 		} 
+
+		//Reunião: a seguinte lógica pode dar problema...?
 
 		if ( Object.getOwnPropertyNames(ObjetoNovo).length > 0) {
 			// &... é igual ao objeto antigo, hehe
@@ -171,8 +204,10 @@ export class MyApp {
 		this.atualizarJSONnovo_typeof( this.global.getJSONnovo_typeof() );
 		
 		//testar limpar
-		this.bluetoothSerial.clear()
+		//Reunião: acho que isso dá merda?
+		//this.bluetoothSerial.clear()
 		
+
 		// Now the "this" still references the component
 		}, 500);  						//setInterval daqui acontece antes
 		//500 ou 750 ou mais?			//dos existentes nas pages temperatura e horario
@@ -208,13 +243,15 @@ export class MyApp {
 	}
   }
   
+  /*
     //https://github.com/don/BluetoothSerial/issues/222
 	onData = function(buffer) {
 		var BTbuffer = new Uint8Array(buffer);
 		console.log("BTbuffer: " + BTbuffer);
 	
 	}
-	
+	*/
+
 	atualizarJSONnovo_typeof(taipeofi){	
 		//https://www.w3resource.com/javascript/operators/typeof.php
 		

@@ -89,10 +89,10 @@ export class ConectarPage {
 						alert.present();
 						console.log(data);
 					  };
-  fail = (error) => { let alert = this.alertCtrl.create({                        // fail = (error) => { alert(error)};  || Imagino que numa versão pasa usuário seja 
-						  title: 'Erro',                                         // viável mostrar apenas 'a conexão foi perdida'. O erro em si se envia pelo log, 
-						  message: 'A conexão com o dispositivo foi perdida.',   // para análise aprofundada.
-						  buttons: [
+  fail = (error) => { let alert = this.alertCtrl.create({             // fail = (error) => { alert(error)};  || Imagino que numa versão pasa usuário seja 
+						  title: 'Erro',                                         	// viável mostrar apenas 'a conexão foi perdida'. O erro em si se envia pelo log, 
+						  message: 'A conexão com o dispositivo foi perdida.',   	// para análise aprofundada.
+						  buttons: [																							// Reunião: conseguimos saber que a conexão foi perdida... de qualquer página fora de "conectar"?
 							{
 							  text: 'Ok',
 							  handler: () => {
@@ -107,8 +107,8 @@ export class ConectarPage {
 
   
   selectDevice(address: any , name:any) {                   
-	if( this.global.bluetooth_connected == false ) {                     // Se o aplicativo nao estiver conectado a um dispositivo, você o conecta ao dispositivo
-		let alert = this.alertCtrl.create({                              // selecionado.
+	if( this.global.bluetooth_connected == false ) {                 		// Se o aplicativo nao estiver conectado a um dispositivo, você o conecta ao dispositivo
+		let alert = this.alertCtrl.create({                            		// selecionado.
 		  title: 'Conectar',
 		  message: 'Você quer conectar com esse dispositivo?',
 		  buttons: [
@@ -127,13 +127,19 @@ export class ConectarPage {
 				
 				//seria bom eu exportar o endereço do dispositivo e ouras variáveis
 				//para uma variável global?
+
+				//Rafael não fez isso:
+				//this.global.address = address;
+				
+				//dá ruim... vamos usar isso:
+
 				this.global.putAddress(address);
 				this.global.putName(name);
 
 				
 				//esse enable() eh suspeito
 				this.bluetoothSerial.enable();
-				this.bluetoothSerial.write("\n {msg: \"Fan coil HEC conectado!\"}");
+				this.bluetoothSerial.write("\n {msg: \"Fan coil HEC conectado!\"}");  //Reunião: implementar "msg" no JSON do Arduino
 			  }
 			}
 		  ]

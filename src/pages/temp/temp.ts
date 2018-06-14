@@ -8,6 +8,9 @@ import { Platform } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
 import { GlobalVariables } from '../../providers/globalvars/globalvars';
 
+//vamos testar @Injectable() pra poder usar as funções descritas aqui... em outra page
+import { Injectable } from "@angular/core"
+
 
 
 //BUGS A CONSERTAR
@@ -21,6 +24,7 @@ import { GlobalVariables } from '../../providers/globalvars/globalvars';
 })
 
 
+@Injectable()
 export class TemperaturaPage {
 
 
@@ -231,9 +235,11 @@ export class TemperaturaPage {
 		console.log("salvarVars() comentado");
 	}
 
-	aumentou_Tmin(){
+	//Reunião: verificar lance do range de temperaturas e correção proposta por Lucas
+
+	public aumentou_Tmin(){
 		this.global.flagComm = true;
-		if( this.t3 - (this.t1+1) >= 2) {                              // Se o valor da temperatura máxima subtraído do aumento da Temperatura mínima feito resultar 
+		if( this.t3 - (this.t1+1) >= 2) {                             // Se o valor da temperatura máxima subtraído do aumento da Temperatura mínima feito resultar 
 			this.t1 += 1;                                             // em um número que seja maior ou  igual a temperatura máxima 2, o que não pode acontecer, 
 			this.texto = "\n { \"t1\": " + this.t1 + " } ";           // tendo em mente de que a temperatura  deve ficar entre os dois valores. Se a Tmin for 29 e a 
 			console.log(this.texto);                                  // Tmax for 30. isso não será possível  já que não existe número inteiro entre 29 e 30. A não 
@@ -258,7 +264,7 @@ export class TemperaturaPage {
 		//this.global.putTMin(this.t1);
 	}
 
-	aumentou_Tmax(){
+	public aumentou_Tmax(){
 		this.global.flagComm = true;
 		if(this.t3+1 <30) {                                    // Se quando o aumento feito o resultado for menor do que 30, é possível fazer o aumento. 
 			this.t3 += 1;
@@ -284,7 +290,7 @@ export class TemperaturaPage {
 		//this.global.putTMax(this.t3);
 	}
 
-	diminuiu_Tmin(){
+	public diminuiu_Tmin(){
 		this.global.flagComm = true;
 		if(this.t1-1 > 16) {
 			this.t1 -= 1;
@@ -310,7 +316,7 @@ export class TemperaturaPage {
 		//this.global.putTMin(this.t1);
 	}
 
-	diminuiu_Tmax(){
+	public diminuiu_Tmax(){
 		this.global.flagComm = true;
 		if( (this.t3 -1) - this.t1 >= 2 ) {
 			this.t3 -= 1;
@@ -357,7 +363,7 @@ export class TemperaturaPage {
 	}
 
 
-	alterarTtrigger()
+	public alterarTtrigger()
 	{
 		let alert = this.alertCtrl.create({
 			title: 'Entre com o tempo em minutos:',
@@ -389,6 +395,8 @@ export class TemperaturaPage {
 						this.texto = "\n { \"tt\": " + this.tt + " } ";
 						this.bluetoothSerial.write(this.texto);
 						console.log(this.texto);
+						
+						//Reunião: o comando abaixo pode estar redundante...
 						this.global.putTtrigger(this.tt);
 					}
 				 }

@@ -9,6 +9,7 @@ import { WelcomePage } from '../pages/01bemvindo/01bemvindo';
 import { ConectarPage } from '../pages/02conectar/02conectar';
 import { TemperaturaPage } from '../pages/temp/temp';
 import { HorarioPage } from '../pages/hora/hora';
+import { DebugPage } from '../pages/debug/debug';
 
 //import { CommTestPage } from '../pages/commtest/commtest';
 //import { GridPage } from '../pages/flexbox/flexbox';
@@ -27,7 +28,8 @@ import { BluetoothSerial } from '@ionic-native/bluetooth-serial';
 	WelcomePage,
 	ConectarPage,
 	TemperaturaPage,
-	HorarioPage,
+  HorarioPage,
+  DebugPage,
 	//CommTestPage,
 	//GridPage,
     //ItemDetailsPage,
@@ -43,7 +45,8 @@ import { BluetoothSerial } from '@ionic-native/bluetooth-serial';
     WelcomePage,
 	ConectarPage,
 	TemperaturaPage,
-	HorarioPage,
+  HorarioPage,
+  DebugPage,
 	//CommTestPage,
     //GridPage,
 	//ItemDetailsPage,

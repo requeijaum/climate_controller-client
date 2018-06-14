@@ -9,8 +9,10 @@
 
 <ion-content padding>
 	<div *ngIf="global.bluetooth_connected"> <!-- <div *ngIf="global.conectado"> --> 
-		<ion-row> Conectado à: {{global.name}}<br> Que possui o endereço: {{global.address}} </ion-row>	
+		<ion-row> Conectado à: {{global.name}} <!-- <br>  Que possui o endereço: {{global.address}} --> </ion-row>	
 	</div>
+
+	<!-- vamos mostrar o global.address no console-->
 	
 	<!-- tentar diminuir a fonte dos elementos da lista -->	
 	<ion-list padding>
