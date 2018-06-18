@@ -71,6 +71,9 @@ export class GlobalVariables {
 	//declarar var
 	public ObjetoNovo_length: number;
 
+	//debug
+	public debug: number;
+
 
 	constructor(){
 		this.address; //= "00:0D:93:0F:57:E1";

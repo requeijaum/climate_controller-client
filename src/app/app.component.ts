@@ -75,7 +75,10 @@ export class MyApp {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();
-      this.splashScreen.hide();
+	  this.splashScreen.hide();
+	  
+	  //debug
+	  this.global.debug = 0;
 	
 	//tentar tirar o Runtime Error quando testo no browser
 	//via "$ ionic serve" 
@@ -105,11 +108,11 @@ export class MyApp {
 									this.bluetoothSerial.readUntil("\n")
 										.then(
 											(data) => { 
-												this.global.recebido = data.toString() ; 
+												this.global.recebido = data; 
 											}
-										),
+										),// pq eu acho que isso ta errado man? Acho que deveria ser la embaixo, falar com rafael
 										
-										() => console.log("this.bluetoothSerial.read() pegou ERRO");
+										() =>  console.log("this.bluetoothSerial.read() pegou ERRO");
 										
 								},
 
@@ -145,7 +148,7 @@ export class MyApp {
 		
 
 		
-		if ( Object.getOwnPropertyNames(ObjetoNovo).length == 0 ) {
+		if ( Object.getOwnPropertyNames(ObjetoNovo).length <= 0 ) {
 			console.log("ObjetoNovo \"JSON.parse(this.global.recebido está vazio!\" ");
 			/*
 			let alert = this.alertCtrl.create({                  // success = (data) => alert(data);
@@ -166,7 +169,7 @@ export class MyApp {
 
 		//Reunião: a seguinte lógica pode dar problema...?
 
-		if ( Object.getOwnPropertyNames(ObjetoNovo).length > 0) {
+		if ( Object.getOwnPropertyNames(ObjetoNovo).length  > 0) {
 			// &... é igual ao objeto antigo, hehe
 			if ( !(Object.is( this.global.JSONnovo , ObjetoNovo) )) { //if (not(boolean))
 				//se antigo !== novo
@@ -176,6 +179,7 @@ export class MyApp {
 			if ( Object.is( this.global.JSONnovo , ObjetoNovo) ) {
 				//se antigo == novo
 				//Não atualiza
+				
 				console.log("ObjetoNovo & global.JSONnovo são iguais. Não atualizar.");
 			}
 		}

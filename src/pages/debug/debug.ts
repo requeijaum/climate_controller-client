@@ -28,12 +28,10 @@ export class DebugPage {
       public global:    GlobalVariables,
       //public temp:      TemperaturaPage  
       ) 
-  
   {
     
     
         platform.registerBackButtonAction( () => { this.voltar(); } , 1 );
-    
   }
 
   ionViewDidLoad() {
