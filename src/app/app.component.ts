@@ -105,7 +105,7 @@ export class MyApp {
 					.subscribe(
 								(data) => { 
 									//this.bluetoothSerial.read()
-									this.bluetoothSerial.readUntil("\n")
+									this.bluetoothSerial.readUntil("}")
 										.then(
 											(data) => { 
 												this.global.recebido = data; 

@@ -32,7 +32,14 @@ export class ConectarPage {
 				) 
   {
 	platform.registerBackButtonAction( () => { this.voltar(); } , 1 );
-    bluetoothSerial.enable();
+		bluetoothSerial.enable();
+		this.pairedDevices = null;
+		this.bluetoothSerial.list().then((success) => {
+			this.pairedDevices = success;
+		},
+			(err) => {
+
+			});
   }
 
 
@@ -44,7 +51,7 @@ export class ConectarPage {
   
   startScanning() {
 	  
-    this.pairedDevices = null;
+    
 		this.unpairedDevices = null;
 		
 		this.bluetoothSerial.isEnabled().then( () => {        // Verifica se o bluetooth esta ligado, se estiver pesquisa, se nao solicita o ligamento do bluetooth.
@@ -62,12 +69,6 @@ export class ConectarPage {
 					console.log(err);
 				})
 	
-			this.bluetoothSerial.list().then((success) => {
-				this.pairedDevices = success;
-			},
-				(err) => {
-	
-				});
 		} , (err) => {
 			this.bluetoothSerial.enable();
 		 } );
