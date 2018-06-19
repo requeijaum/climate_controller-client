@@ -67,6 +67,7 @@ export class MyApp {
 		//{ title: 'My First List'				, component: ListPage },
 		//{ title: 'Timer'						, component: TimerComponent }
 	];
+	this.global.debug = 0;
   }
   
   
@@ -100,24 +101,46 @@ export class MyApp {
 			//funciona... mas no ionic serve (teste no Browser) da runtime error
 			//colocar um IF pra platform ou view?
 			
-			if (this.bluetoothSerial.isEnabled && !this.global.flagComm) {
-				this.bluetoothSerial.subscribeRawData()
+
+			
+			if (this.bluetoothSerial.isConnected && !this.global.flagComm) {  // Mudar e usar com promisse
+				/*this.bluetoothSerial.subscribeRawData()
 					.subscribe(
 								(data) => { 
 									//this.bluetoothSerial.read()
 									this.bluetoothSerial.readUntil("}")
 										.then(
 											(data) => { 
-												this.global.recebido = data; 
-											}
-										),// pq eu acho que isso ta errado man? Acho que deveria ser la embaixo, falar com rafael
+												setTimeout(this.global.recebido = data, 100);
+											},
+										//),  Isso ta errado ctz...
 										
-										() =>  console.log("this.bluetoothSerial.read() pegou ERRO");
+											() =>  { 
+												console.log("this.bluetoothSerial.read() pegou ERRO"); 
+										}); // acho q era pra ser aq
 										
-								},
-
-					);
-				
+										
+										
+										
+										var bytes = new Uint8Array(data);
+										alert(bytes);
+										function ab2str(buf) {
+											return String.fromCharCode.apply(null, new Uint8Array(buf));
+										  }
+										  this.global.recebido = ab2str(data);
+								}, () => {
+									this.global.debug++;
+								}
+							
+					);*/
+					this.bluetoothSerial.readUntil("}").then(      // Problema com buffer truncado.
+						(data) => {
+							this.global.recebido = data;
+						} , () => {
+							alert("Ocorreu um problema na comunicação com o dispositivo.")
+						}
+					)
+				//alert("teste");
 				console.log("bluetoothSerial.read() = " + this.global.recebido);
 			}
 		
@@ -132,15 +155,16 @@ export class MyApp {
 
 		//Reunião: podemos otimizar isso no Observable anterior?
 
-		this.global.recebido = this.global.recebido.replace(/\u0027/g, '\u0022').replace(/[\r\n]/g, '');
+		//this.global.recebido = this.global.recebido.replace(/\u0027/g, '\u0022').replace(/[\r\n]/g, ''); 
 		
-		
+		//this.global.recebido = "{\"a\":0,\"b\":0,\"m\":0,\"p\":1,\"pd1\":1200,\"pd2\":1740,\"pl1\":1000,\"pl2\":1630,\"s\":0,\"t1\":22,\"t2\":26,\"t3\":29,\"tt\":15}";
 
 
 		//testar se o objeto que vai pra global está vazio
 		
 		//https://stackoverflow.com/questions/679915/how-do-i-test-for-an-empty-javascript-object
 		var ObjetoNovo = JSON.parse(this.global.recebido);
+		//alert(JSON.stringify(ObjetoNovo));
 
 		//implementar um promisse pra error handling
 		
@@ -148,7 +172,8 @@ export class MyApp {
 		
 
 		
-		if ( Object.getOwnPropertyNames(ObjetoNovo).length <= 0 ) {
+		if ( Object.getOwnPropertyNames(ObjetoNovo).length == 0) {
+			
 			console.log("ObjetoNovo \"JSON.parse(this.global.recebido está vazio!\" ");
 			/*
 			let alert = this.alertCtrl.create({                  // success = (data) => alert(data);
@@ -169,7 +194,8 @@ export class MyApp {
 
 		//Reunião: a seguinte lógica pode dar problema...?
 
-		if ( Object.getOwnPropertyNames(ObjetoNovo).length  > 0) {
+		if ( Object.getOwnPropertyNames(ObjetoNovo).length  == 13) {
+			this.global.debug++;
 			// &... é igual ao objeto antigo, hehe
 			if ( !(Object.is( this.global.JSONnovo , ObjetoNovo) )) { //if (not(boolean))
 				//se antigo !== novo
@@ -213,10 +239,12 @@ export class MyApp {
 		
 
 		// Now the "this" still references the component
-		}, 500);  						//setInterval daqui acontece antes
+		}, 500);         				//setInterval daqui acontece antes
 		//500 ou 750 ou mais?			//dos existentes nas pages temperatura e horario
 		//1000 ou 1500					//logo: envia o que ta na page mas antes... 
 										//recebe os valores do arduino
+
+										//Lucas: Aumentando o intervalo para tentar resolver o problema de comunicação com o arduino
 	}
     });
   }

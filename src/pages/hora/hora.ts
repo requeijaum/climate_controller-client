@@ -133,7 +133,7 @@ export class HorarioPage {
 				//atualmente ta com bug temporal
 
 
-			}, 100);
+			}, 100); // era 100
 		}
 
 		//testar algoritmos depois de ter recebido o primeiro JSON

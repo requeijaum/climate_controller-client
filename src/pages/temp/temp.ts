@@ -114,7 +114,7 @@ export class TemperaturaPage {
 				//testar
 				//this.global.putTAtual(parseInt(this.global.JSONnovo.t2));
 
-			}, 500);
+			}, 500); // era 500
 		}
 	}
 
