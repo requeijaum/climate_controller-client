@@ -8,11 +8,7 @@ Feito com Ionic 3 e Cordova.
 
 ## Iniciando
 
-Inicie um projeto em branco com o Ionic CLI e dê um 
-```bash
-git pull
-``` 
-dentro da pasta do projeto.
+Inicie um projeto em branco com o Ionic CLI e dê um ```git fetch; git pull``` dentro da pasta do projeto.
 
 
 ### Plugins do Cordova
