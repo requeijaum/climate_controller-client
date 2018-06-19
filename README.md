@@ -8,14 +8,18 @@ Feito com Ionic 3 e Cordova.
 
 ## Iniciando
 
-Inicie um projeto em branco com o Ionic CLI e dê um git pull dentro da pasta do projeto.
+Inicie um projeto em branco com o Ionic CLI e dê um 
+```bash
+git pull
+``` 
+dentro da pasta do projeto.
 
 
 ### Plugins do Cordova
 
 >https://github.com/don/BluetoothSerial
 
-```
+```bash
 cordova plugin add cordova-plugin-bluetooth-serial
 ```
 
@@ -23,7 +27,7 @@ cordova plugin add cordova-plugin-bluetooth-serial
 
 Deixei um script pronto - necessita do ambiente Android Studio e uma SDK com API Level >= 16.
 
-```
+```bash
 ./build.sh --prod
 ```
 
@@ -34,11 +38,10 @@ Deixei um script pronto - necessita do ambiente Android Studio e uma SDK com API
 Na hora de buildar o apk ou testar o aplicativo com ionic serve, caso dê incompatibilidade com a arquitetura de seu computador atual rode os seguintes
 comandos no terminal:
 
->npm uninstall --save node-sass
+```bash
+npm uninstall --save node-sass
+```
 
-Depois:
-
->npm install --save node-sass
 
 ## Contribuindo
 
