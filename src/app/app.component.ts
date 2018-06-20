@@ -7,6 +7,7 @@ import { ConectarPage } from '../pages/02conectar/02conectar';
 import { TemperaturaPage } from '../pages/temp/temp';
 import { HorarioPage } from '../pages/hora/hora';
 import { DebugPage } from '../pages/debug/debug';
+
 //import { CommTestPage } from '../pages/commtest/commtest';
 //import { GridPage } from '../pages/flexbox/flexbox';
 //import { ListPage } from '../pages/list/list';
@@ -42,7 +43,7 @@ export class MyApp {
 		public splashScreen: 	      SplashScreen,
 		public global: 			        GlobalVariables,
 		public alertCtrl:           AlertController,
-    public PegadorJSON:         PegadorJSON
+    public PegadorJSON:         PegadorJSON,
   ) 
 	{
 
@@ -93,7 +94,7 @@ export class MyApp {
         
             //talvez esse if com && this.global.flagComm esteja travando tudo
 
-            if (this.global.bluetooth_connected && !this.global.flagComm) {  // Mudar e usar com promisse att: Ou usar a variavel global que voce criou bobao...
+            if (this.global.bluetooth_connected) {  // Mudar e usar com promisse att: Ou usar a variavel global que voce criou bobao...
               //alert("debug"); // Testando funcionamento da condicional
               /*this.bluetoothSerial.subscribeRawData()
                 .subscribe(
@@ -177,7 +178,6 @@ export class MyApp {
                     //Reunião: a seguinte lógica pode dar problema...?
       
                     if ( Object.getOwnPropertyNames(ObjetoNovo).length  == 13) {
-                      this.global.debug++;
                       // &... é igual ao objeto antigo, hehe
                       if ( !(Object.is( this.global.JSONnovo , ObjetoNovo) )) { //if (not(boolean))
                         //se antigo !== novo
@@ -213,7 +213,7 @@ export class MyApp {
           
                     this.global.putMask		(this.global.JSONnovo.m);
            
-                    this.atualizarJSONnovo_typeof( this.global.getJSONnovo_typeof() );
+                    //this.atualizarJSONnovo_typeof( this.global.getJSONnovo_typeof() ); Aparentemente isso sumiu
           
                     //testar limpar
                     //Reunião: acho que isso dá merda?
@@ -266,6 +266,7 @@ export class MyApp {
 		this.nav.setRoot(page.component);
 	}
   }
+
   
   /*
     //https://github.com/don/BluetoothSerial/issues/222

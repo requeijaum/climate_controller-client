@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { BluetoothSerial } from '@ionic-native/bluetooth-serial';
 
 //tentar travar a saida do aplicativo caso aperte o botao de voltar
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, LoadingController } from 'ionic-angular';
 import { Platform } from 'ionic-angular';
 
 import { AlertController } from 'ionic-angular';
@@ -10,7 +10,6 @@ import { GlobalVariables } from '../../providers/globalvars/globalvars';
 
 //vamos testar @Injectable() pra poder usar as funções descritas aqui... em outra page
 import { Injectable } from "@angular/core"
-
 
 
 //BUGS A CONSERTAR
@@ -34,12 +33,17 @@ export class TemperaturaPage {
 					public  navParams		: NavParams,
 					public  platform		: Platform,
 					public  alertCtrl		: AlertController,
-					public  global			: GlobalVariables
+					public  global			: GlobalVariables,
+					public loadingCtrl: LoadingController
 					)
 
 		{
 			platform.registerBackButtonAction( () => { this.voltar(); } , 1 );
 			this.contaComm = 0;
+			this.aumentouTmax = false;
+			this.aumentouTmin = false;
+			this.diminuiuTmax = false;
+			this.diminuiuTmin = false;
 
 			//bluetoothSerial.enable();
 			//bluetoothSerial.connect(this.address);
@@ -81,6 +85,17 @@ export class TemperaturaPage {
 	public presencaState: boolean;
 	public presencaColor : string;
 
+	public tempaux: any;
+	public aumentouTmax: boolean;
+	public aumentouTmin: boolean;
+	public diminuiuTmax: boolean;
+	public diminuiuTmin: boolean;
+	public ttaux: any;       
+	public alterouTtrigger: boolean; //lidar com o loader
+
+	public loader: any;
+
+
 
 	//tentar travar a saida do aplicativo caso aperte o botao de voltar
 	voltar(){
@@ -108,13 +123,39 @@ export class TemperaturaPage {
 
 				//debug
 				this.carregarVars();
+				if(this.aumentouTmax && this.global.t3 == this.tempaux) {
+					this.loader.dismiss();
+					this.aumentouTmax = false;
+					this.tempaux = 0;
+				}
+				if(this.aumentouTmin && this.global.t1 == this.tempaux) {
+					this.loader.dismiss();
+					this.aumentouTmin = false;
+					this.tempaux = 0;
+				}
+				if(this.diminuiuTmax && this.global.t3 == this.tempaux) {
+					this.loader.dismiss();
+					this.diminuiuTmax = false;
+					this.tempaux = 0;
+				}
+				if(this.diminuiuTmin && this.global.t1 == this.tempaux) {
+					this.loader.dismiss();
+					this.diminuiuTmin = false;
+					this.tempaux = 0;
+				}
+
+				if(this.alterouTtrigger && this.global.tt == this.tt) {               // NAO ESTA FUNCIONANDO AINDA!
+					this.loader.dimiss();
+					this.alterouTtrigger = false;
+					this.ttaux = 0;
+				}
 				this.global.PresencaIcone(parseInt(this.global.p));
 
 
 				//testar
 				//this.global.putTAtual(parseInt(this.global.JSONnovo.t2));
 
-			}, 500); // era 500
+			}, 100); // era 500
 		}
 	}
 
@@ -201,12 +242,9 @@ export class TemperaturaPage {
 	//JSON recebido via Bluetooth
 	carregarVars(){
 		//this.contaComm = 0; //Reuniao: Contador para debug
-
-		if (this.global.flagComm == false) {
 			this.t1 	= this.global.getTMin();
 			this.t2 	= this.global.getTAtual();
 			this.t3 	= this.global.getTMax();
-		}
 
 		this.p 		= this.global.getPresenca();
 
@@ -242,15 +280,21 @@ export class TemperaturaPage {
 	//Reunião: verificar lance do range de temperaturas e correção proposta por Lucas
 
 	public aumentou_Tmin(){
-		this.global.flagComm = true;
-		if(this.global.flagComm) {
+		if(this.global.flagComm) {  // DEBUG
 			this.contaComm++;
 		}
 		if( this.t3 - (this.t1+1) >= 2) {                             // Se o valor da temperatura máxima subtraído do aumento da Temperatura mínima feito resultar 
+			this.global.flagComm = true;
 			this.t1 += 1;                                             // em um número que seja maior ou  igual a temperatura máxima 2, o que não pode acontecer, 
 			this.texto = "\n { \"t1\": " + this.t1 + " } ";           // tendo em mente de que a temperatura  deve ficar entre os dois valores. Se a Tmin for 29 e a 
 			console.log(this.texto);                                  // Tmax for 30. isso não será possível  já que não existe número inteiro entre 29 e 30. A não 
 			this.bluetoothSerial.write(this.texto);                   // ser que o código assuma 29 e 30 como parte do intervalo. Preciso averiguar.
+			this.tempaux = this.t1;
+			this.aumentouTmin = true;
+			this.loader = this.loadingCtrl.create({
+				content: "Aguarde enquanto o dispositivo processa seu comando...",
+			  });
+			this.loader.present();
 		}
 		else {
 			let alert = this.alertCtrl.create( {
@@ -266,21 +310,26 @@ export class TemperaturaPage {
 			alert.present();
 				
 		}
-		this.global.flagComm = false;
 		//debug
 		//this.global.putTMin(this.t1);
 	}
 
 	public aumentou_Tmax(){
-		this.global.flagComm = true;
 		if(this.global.flagComm) {
 			this.contaComm++;
 		}
-		if(this.t3+1 <30) {                                    // Se quando o aumento feito o resultado for menor do que 30, é possível fazer o aumento. 
+		if(this.t3+1 <30) {                                    // Se quando o aumento feito o resultado for menor do que 30, é possível fazer o aumento.
+			this.global.flagComm = true;
 			this.t3 += 1;
 			this.texto = "\n { \"t3\": " + this.t3 + " } ";
 			console.log(this.texto);
 			this.bluetoothSerial.write(this.texto);
+			this.tempaux = this.t3;
+			this.aumentouTmax = true;
+			this.loader = this.loadingCtrl.create({
+				content: "Aguarde enquanto o dispositivo processa seu comando...",
+			  });
+			this.loader.present();
 		}
 		else {                                                // Se o aumento feito resultar em uma temperatura maior do que 29, não se deve aumentar. Ou seja, não faz nada. TESTE
 			let alert = this.alertCtrl.create( {
@@ -295,21 +344,29 @@ export class TemperaturaPage {
 			} );
 			alert.present();
 		}
-		this.global.flagComm = false;
 		//debug
 		//this.global.putTMax(this.t3);
 	}
 
 	public diminuiu_Tmin(){
-		this.global.flagComm = true;
 		if(this.global.flagComm) {
 			this.contaComm++;
 		}
 		if(this.t1-1 > 16) {
+			this.global.flagComm = true;
 			this.t1 -= 1;
 			this.texto = "\n { \"t1\": " + this.t1 + " } ";
 			console.log(this.texto);
 			this.bluetoothSerial.write(this.texto);
+			this.tempaux = this.t1;
+			this.diminuiuTmin = true;
+			this.loader = this.loadingCtrl.create({
+				content: "Aguarde enquanto o dispositivo processa seu comando...",
+			  });
+			this.loader.present();
+			
+
+
 		}
 		else {
 			let alert = this.alertCtrl.create( {
@@ -330,15 +387,22 @@ export class TemperaturaPage {
 	}
 
 	public diminuiu_Tmax(){
-		this.global.flagComm = true;
+		this.tempaux = this.t3;
 		if(this.global.flagComm) {
 			this.contaComm++;
 		}
 		if( (this.t3 -1) - this.t1 >= 2 ) {
+			this.global.flagComm = true;
 			this.t3 -= 1;
 			this.texto = "\n { \"t3\": " + this.t3 + " } ";
 			console.log(this.texto);
 			this.bluetoothSerial.write(this.texto);
+			this.tempaux = this.t3;
+			this.diminuiuTmax = true;
+			this.loader = this.loadingCtrl.create({
+				content: "Aguarde enquanto o dispositivo processa seu comando...",
+			  });
+			this.loader.present();
 		}
 		else {
 			let alert = this.alertCtrl.create( {
@@ -413,7 +477,13 @@ export class TemperaturaPage {
 						console.log(this.texto);
 						
 						//Reunião: o comando abaixo pode estar redundante...
-						this.global.putTtrigger(this.tt);
+						//this.global.putTtrigger(this.tt);
+						this.ttaux = this.tt;
+						this.alterouTtrigger = true;
+						this.loader = this.loadingCtrl.create({
+							content: "Aguarde enquanto o dispositivo processa seu comando...",
+						  });
+						this.loader.present();
 					}
 				 }
 			]
@@ -422,10 +492,6 @@ export class TemperaturaPage {
 	);
 		alert.present();
 	}
-
-
-
-
 }
 
 
