@@ -257,6 +257,5 @@ export class GlobalVariables {
 	//Reunião: testar buffer completo com bluetoothSerial.readUntil()
 	getObjetoNovo_length() { return this.ObjetoNovo_length; }
 	putObjetoNovo_length(ObjetoNovo_length) {this.ObjetoNovo_length = ObjetoNovo_length; }
-	
 
 }

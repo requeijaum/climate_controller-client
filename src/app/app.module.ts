@@ -21,6 +21,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { BluetoothSerial } from '@ionic-native/bluetooth-serial';
 
+import { PegadorJSON } from '../providers/pegajson/pegajson';
+
 
 @NgModule({
   declarations: [
@@ -58,7 +60,10 @@ import { BluetoothSerial } from '@ionic-native/bluetooth-serial';
     StatusBar,
     SplashScreen,
 	GlobalVariables,
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+  PegadorJSON,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
+
   ]
 })
 export class AppModule {}

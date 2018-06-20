@@ -15,6 +15,8 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { BluetoothSerial } from '@ionic-native/bluetooth-serial';
+import { PegadorJSON } from '../providers/pegajson/pegajson';
+
 
 @Component({
   templateUrl: 'app.html'
@@ -39,23 +41,24 @@ export class MyApp {
 		public statusBar: 		      StatusBar,
 		public splashScreen: 	      SplashScreen,
 		public global: 			        GlobalVariables,
-		public alertCtrl:           AlertController
-	) 
+		public alertCtrl:           AlertController,
+    public PegadorJSON:         PegadorJSON
+  ) 
 	{
 
     this.initializeApp();
 
     // set our app's pages
     this.pages = [
-		{ title: 'Controle do Fancoil - HEC'	, component: WelcomePage },
-		{ title: 'Conectar dispositivo'			, component: ConectarPage },
-		{ title: 'Temperatura'					, component: TemperaturaPage },
-		{ title: 'Horários de acionamento'		, component: HorarioPage },
-		{ title: 'Pagina de Debug'               , component: DebugPage	},
-		//{ title: 'CommTest'						, component: CommTestPage },
-		//{ title: 'GridPage'						, component: GridPage },
-		//{ title: 'My First List'				, component: ListPage },
-		//{ title: 'Timer'						, component: TimerComponent }
+		{ title: 'Controle do Fancoil - HEC'    , component: WelcomePage },
+		{ title: 'Conectar dispositivo'			    , component: ConectarPage },
+		{ title: 'Temperatura'					        , component: TemperaturaPage },
+		{ title: 'Horários de acionamento'		  , component: HorarioPage },
+		{ title: 'Pagina de Debug'              , component: DebugPage	},
+		//{ title: 'CommTest'						        , component: CommTestPage },
+		//{ title: 'GridPage'						        , component: GridPage },
+		//{ title: 'My First List'				      , component: ListPage },
+		//{ title: 'Timer'						          , component: TimerComponent }
 	  ];
     
     this.global.debug = 0;
@@ -84,158 +87,70 @@ export class MyApp {
                   }, (err) => {
                         this.global.putBluetoothConectado(false);
                         });
-          //this.testaConectado();
+                        
           
-          
-
-          console.log("app.component.ts - setInterval() funciona!");
-          Object.assign( this.JSONnovo, this.global.JSONnovo);
-          
+            this.global.recebido = this.PegadorJSON.JSONpeguei.toString();
         
-          if (this.bluetoothSerial.isConnected && !this.global.flagComm) {  // Mudar e usar com promisse
-            /*this.bluetoothSerial.subscribeRawData()
-              .subscribe(
-                    (data) => { 
-                      //this.bluetoothSerial.read()
-                      this.bluetoothSerial.readUntil("}")
-                        .then(
-                          (data) => { 
-                            setTimeout(this.global.recebido = data, 100);
-                          },
-                        //),  Isso ta errado ctz...
-                        
-                          () =>  { 
-                            console.log("this.bluetoothSerial.read() pegou ERRO"); 
-                        }); // acho q era pra ser aq
-                        
-                        
-                        
-                        
-                        var bytes = new Uint8Array(data);
-                        alert(bytes);
-                        function ab2str(buf) {
-                          return String.fromCharCode.apply(null, new Uint8Array(buf));
-                          }
-                          this.global.recebido = ab2str(data);
-                    }, () => {
-                      this.global.debug++;
-                    }
-                  
-              );*/
-              this.bluetoothSerial.readUntil("}").then(      // Problema com buffer truncado.
-                (data) => {
-                  this.global.recebido = data;
-                } , () => {
-                  alert("Ocorreu um problema na comunicação com o dispositivo.")
-                }
-              ).catch( () => {alert("bluetoothSerial.readUntil.then(...).catch() pegou um erro")})
-            //alert("teste");
-            console.log("bluetoothSerial.read() = " + this.global.recebido);
-          }
-        
-        
-        //--> conserter essa merda logo!
+            //talvez esse if com && this.global.flagComm esteja travando tudo
 
-        //inventar alguma Promise pra pegar a exception do JSON.parse() ?
-
-        //substituir aspas simples por aspas duplas...
-        //a ArduinoJSON e Python3 usam aspas diferentes
-        //codigo unicode correspondente...
-
-        //Reunião: podemos otimizar isso no Observable anterior?
-
-        //this.global.recebido = this.global.recebido.replace(/\u0027/g, '\u0022').replace(/[\r\n]/g, ''); 
-        
-        //this.global.recebido = "{\"a\":0,\"b\":0,\"m\":0,\"p\":1,\"pd1\":1200,\"pd2\":1740,\"pl1\":1000,\"pl2\":1630,\"s\":0,\"t1\":22,\"t2\":26,\"t3\":29,\"tt\":15}";
-
-
-        //testar se o objeto que vai pra global está vazio
-        
-        //https://stackoverflow.com/questions/679915/how-do-i-test-for-an-empty-javascript-object
-        var ObjetoNovo = JSON.parse(this.global.recebido);
-        //alert(JSON.stringify(ObjetoNovo));
-
-        //implementar um promisse pra error handling
-        
-        this.global.putObjetoNovo_length (Object.getOwnPropertyNames(ObjetoNovo).length);
-        
-
-        
-        if ( Object.getOwnPropertyNames(ObjetoNovo).length == 0) {
-          
-          console.log("ObjetoNovo \"JSON.parse(this.global.recebido está vazio!\" ");
-          /*
-          let alert = this.alertCtrl.create({                  // success = (data) => alert(data);
-            title: 'DEU MERDA',
-            message: 'QCU',
-            buttons: [
-              {
-              text: 'Ok',
-              handler: () => {
-                console.log('Apertou ok!');
-              }
-              },
-            ]
-            });
-            alert.present();
-            */
-        } 
-
-        //Reunião: a seguinte lógica pode dar problema...?
-
-        if ( Object.getOwnPropertyNames(ObjetoNovo).length  == 13) {
-          this.global.debug++;
-          // &... é igual ao objeto antigo, hehe
-          if ( !(Object.is( this.global.JSONnovo , ObjetoNovo) )) { //if (not(boolean))
-            //se antigo !== novo
-            //atualiza
-            this.global.JSONnovo = Object.assign( {}, ObjetoNovo );			
-          }
-          if ( Object.is( this.global.JSONnovo , ObjetoNovo) ) {
-            //se antigo == novo
-            //Não atualiza
+            if (this.bluetoothSerial.isConnected) {  // Mudar e usar com Promise
             
-            console.log("ObjetoNovo & global.JSONnovo são iguais. Não atualizar.");
+
+            var jsinho = this.PegadorJSON.pegaJSON();
+            
+
+            if (Object.is(this.global.JSONnovo , jsinho)){
+              console.log("Objetos são iguais... não vou dar Object.assign()");              
+              //falta algum timeout? algum async, await?    
+            } else { 
+
+              Object.assign(this.global.JSONnovo , jsinho);
+            }
+
+            //Acho que essas coisas bugam...            
+            //console.log("app.component.ts - setInterval() funciona!")
+            Object.assign( this.JSONnovo, this.global.JSONnovo);
+            
+
+            }
+        
+        
+
+            
+            //testar	
+            //copia objetos
+
+            
+            this.global.putTMin  	(this.global.JSONnovo.t1);
+            this.global.putTAtual	(parseInt(this.global.JSONnovo.t2));
+            this.global.putTMax		(this.global.JSONnovo.t3);
+            
+            this.global.putPresenca	(parseInt(this.global.JSONnovo.p));
+            this.global.putTtrigger	(this.global.JSONnovo.tt);
+            
+            this.global.putPL1		(this.global.JSONnovo.pl1);
+            this.global.putPL2		(this.global.JSONnovo.pl2);
+            this.global.putPD1		(this.global.JSONnovo.pd1);
+            this.global.putPD2		(this.global.JSONnovo.pd2);
+            
+            this.global.putMask		(this.global.JSONnovo.m);
+            
+            //this.atualizarJSONnovo_typeof( this.global.getJSONnovo_typeof() );
+            
+            //testar limpar
+            //Reunião: acho que isso dá merda?
+            //this.bluetoothSerial.clear()
+            
+
+            // Now the "this" still references the component
+          }, 500);         				//setInterval daqui acontece antes
+            //500 ou 750 ou mais?			//dos existentes nas pages temperatura e horario
+            //1000 ou 1500					//logo: envia o que ta na page mas antes... 
+                            //recebe os valores do arduino
+
+                            //Lucas: Aumentando o intervalo para tentar resolver o problema de comunicação com o arduino
           }
-        }
-        
-
-        
-        
-        //testar	
-        //copia objetos
-
-        
-        this.global.putTMin  	(this.global.JSONnovo.t1);
-        this.global.putTAtual	(parseInt(this.global.JSONnovo.t2));
-        this.global.putTMax		(this.global.JSONnovo.t3);
-        
-        this.global.putPresenca	(parseInt(this.global.JSONnovo.p));
-        this.global.putTtrigger	(this.global.JSONnovo.tt);
-        
-        this.global.putPL1		(this.global.JSONnovo.pl1);
-        this.global.putPL2		(this.global.JSONnovo.pl2);
-        this.global.putPD1		(this.global.JSONnovo.pd1);
-        this.global.putPD2		(this.global.JSONnovo.pd2);
-        
-        this.global.putMask		(this.global.JSONnovo.m);
-        
-        this.atualizarJSONnovo_typeof( this.global.getJSONnovo_typeof() );
-        
-        //testar limpar
-        //Reunião: acho que isso dá merda?
-        //this.bluetoothSerial.clear()
-        
-
-        // Now the "this" still references the component
-        }, 500);         				//setInterval daqui acontece antes
-        //500 ou 750 ou mais?			//dos existentes nas pages temperatura e horario
-        //1000 ou 1500					//logo: envia o que ta na page mas antes... 
-                        //recebe os valores do arduino
-
-                        //Lucas: Aumentando o intervalo para tentar resolver o problema de comunicação com o arduino
-      }
-    });
+        });
   }
 
   openPage(page) {
@@ -272,38 +187,4 @@ export class MyApp {
 	
 	}
 	*/
-
-	atualizarJSONnovo_typeof(taipeofi){	
-		//https://www.w3resource.com/javascript/operators/typeof.php
-		
-		if (typeof taipeofi === 'object'){
-			this.global.putJSONnovo_typeof("object");
-		}
-		if (typeof taipeofi === 'number'){
-			this.global.putJSONnovo_typeof("number");
-		}
-		if (typeof taipeofi === 'string'){
-			this.global.putJSONnovo_typeof("string");
-		}
-		if (typeof taipeofi === 'undefined'){
-			this.global.putJSONnovo_typeof("undefined");
-		}
-	}	
-
-	testaConectado(){
-		if (this.global.name.length < 1) {
-			this.global.conectado = false;
-			return 0;
-		}
-
-		if (this.global.name.length > 0) {
-			this.global.conectado = true;
-			return 1;
-		}
-	 }
-  
 }
-
-	
-
-
