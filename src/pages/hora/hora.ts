@@ -124,7 +124,7 @@ export class HorarioPage {
 		if (this.platform.is('android')) {
 			this.global.horaTimer = setInterval(() => {
 
-				console.log("temp.ts - setInterval() funciona!");
+				console.log("hora.ts - setInterval() funciona!");
 
 				this.carregarVars();
 

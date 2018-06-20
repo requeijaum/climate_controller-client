@@ -88,59 +88,66 @@ export class MyApp {
                         this.global.putBluetoothConectado(false);
                         });
                         
-          
-            this.global.recebido = this.PegadorJSON.JSONpeguei.toString();
-        
+            
             //talvez esse if com && this.global.flagComm esteja travando tudo
 
-            if (this.bluetoothSerial.isConnected) {  // Mudar e usar com Promise
+            if (this.global.bluetooth_connected && !this.global.flagComm) {  // Mudar e usar com Promise
             
+              this.global.debug = 1;
 
-            var jsinho = this.PegadorJSON.pegaJSON();
-            
+              this.global.recebido = this.PegadorJSON.dados;
+              
+              
+              /*
 
-            if (Object.is(this.global.JSONnovo , jsinho)){
-              console.log("Objetos são iguais... não vou dar Object.assign()");              
-              //falta algum timeout? algum async, await?    
-            } else { 
+              if (Object.is(this.global.JSONnovo , this.JSONnovo)){
+                console.log("Objetos são iguais... não vou dar Object.assign()");              
+                //falta algum timeout? algum async, await?    
+              } 
+              else if (Object.is(this.JSONnovo, {})) {
+                console.log("this.JSONnovo veio vazio!")
+              } else {
+                console.log("Object.assign(this.global.JSONnovo , this.JSONnovo)")
+                Object.assign(this.global.JSONnovo , this.JSONnovo)
+              }
+              */
+              console.log("app.component salvando this.global.JSONnovo")
+              this.global.JSONnovo = Object.assign({} , this.PegadorJSON.pegaJSON())
 
-              Object.assign(this.global.JSONnovo , jsinho);
-            }
+              //Acho que essas coisas bugam...            
+              //console.log("app.component.ts - setInterval() funciona!")
+              //Object.assign( this.JSONnovo, this.global.JSONnovo);
+              console.log(this.global.JSONnovo);
 
-            //Acho que essas coisas bugam...            
-            //console.log("app.component.ts - setInterval() funciona!")
-            Object.assign( this.JSONnovo, this.global.JSONnovo);
-            
+              }
+          
+          
 
-            }
-        
-        
+              /*
+              //testar	
+              //copia objetos
 
-            
-            //testar	
-            //copia objetos
-
-            
-            this.global.putTMin  	(this.global.JSONnovo.t1);
-            this.global.putTAtual	(parseInt(this.global.JSONnovo.t2));
-            this.global.putTMax		(this.global.JSONnovo.t3);
-            
-            this.global.putPresenca	(parseInt(this.global.JSONnovo.p));
-            this.global.putTtrigger	(this.global.JSONnovo.tt);
-            
-            this.global.putPL1		(this.global.JSONnovo.pl1);
-            this.global.putPL2		(this.global.JSONnovo.pl2);
-            this.global.putPD1		(this.global.JSONnovo.pd1);
-            this.global.putPD2		(this.global.JSONnovo.pd2);
-            
-            this.global.putMask		(this.global.JSONnovo.m);
-            
-            //this.atualizarJSONnovo_typeof( this.global.getJSONnovo_typeof() );
-            
-            //testar limpar
-            //Reunião: acho que isso dá merda?
-            //this.bluetoothSerial.clear()
-            
+              
+              this.global.putTMin  	(this.global.JSONnovo.t1);
+              this.global.putTAtual	(parseInt(this.global.JSONnovo.t2));
+              this.global.putTMax		(this.global.JSONnovo.t3);
+              
+              this.global.putPresenca	(parseInt(this.global.JSONnovo.p));
+              this.global.putTtrigger	(this.global.JSONnovo.tt);
+              
+              this.global.putPL1		(this.global.JSONnovo.pl1);
+              this.global.putPL2		(this.global.JSONnovo.pl2);
+              this.global.putPD1		(this.global.JSONnovo.pd1);
+              this.global.putPD2		(this.global.JSONnovo.pd2);
+              
+              this.global.putMask		(this.global.JSONnovo.m);
+              
+              //this.atualizarJSONnovo_typeof( this.global.getJSONnovo_typeof() );
+              
+              //testar limpar
+              //Reunião: acho que isso dá merda?
+              //this.bluetoothSerial.clear()
+              */
 
             // Now the "this" still references the component
           }, 500);         				//setInterval daqui acontece antes

@@ -413,7 +413,7 @@ export class TemperaturaPage {
 						console.log(this.texto);
 						
 						//Reunião: o comando abaixo pode estar redundante...
-						this.global.putTtrigger(this.tt);
+						//this.global.putTtrigger(this.tt);
 					}
 				 }
 			]
