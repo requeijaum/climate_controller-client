@@ -61,10 +61,10 @@ export class HorarioPage {
 	//public horaTimer: any;
 	public flagComm: boolean;
 
-	pl1 : number;
-	pl2 : number;
-	pd1 : number;
-	pd2 : number;
+	pl1 : string; // vamos testar como string. era number
+	pl2 : string;
+	pd1 : string;
+	pd2 : string;
 
 	//vou ter problemas, acho
 	a1: any;
@@ -127,7 +127,7 @@ export class HorarioPage {
 				console.log("temp.ts - setInterval() funciona!");
 
 				this.carregarVars();
-
+				//this.carregarEvent();
 
 				//ver uma flagEvent aí
 				//atualmente ta com bug temporal
@@ -246,8 +246,8 @@ export class HorarioPage {
 
 	f_pl1(){
 
-		var pl1 = this.event.PL1.replace(":", "");
-		this.pl1 = parseInt(pl1);
+		this.pl1 = this.event.PL1.replace(":", "");
+		//this.pl1 = parseInt(pl1);
 		//this.texto = "\n { \"pl1\": " + this.pl1 + " } \r";
 		//console.log(this.texto);
 		//this.bluetoothSerial.write(this.texto);
@@ -256,8 +256,8 @@ export class HorarioPage {
 
 	f_pl2(){
 
-		var pl2 = this.event.PL2.replace(":", "");
-		this.pl2 = parseInt(pl2);
+		this.pl2 = this.event.PL2.replace(":", "");
+		//this.pl2 = parseInt(pl2);
 		//this.texto = "\n { \"pl2\": " + this.pl2 + " } \r";
 		//console.log(this.texto);
 		//this.bluetoothSerial.write(this.texto);
@@ -266,8 +266,8 @@ export class HorarioPage {
 
 	f_pd1(){
 
-		var pd1 = this.event.PD1.replace(":", "");
-		this.pd1 = parseInt(pd1);
+		this.pd1 = this.event.PD1.replace(":", "");
+		//this.pd1 = parseInt(pd1);
 		//this.texto = "\n { \"pd1\": " + this.pd1 + " } \r";
 		//console.log(this.texto);
 		//this.bluetoothSerial.write(this.texto);
@@ -275,8 +275,8 @@ export class HorarioPage {
 	}
 
 	f_pd2(){
-		var pd2 = this.event.PD2.replace(":", "");
-		this.pd2 = parseInt(pd2);
+		this.pd2 = this.event.PD2.replace(":", "");
+		//this.pd2 = parseInt(pd2);
 		//this.texto = "\n { \"pd2\": " + this.pd2 + " } \r";
 		//console.log(this.texto);
 		//this.bluetoothSerial.write(this.texto);
@@ -368,7 +368,7 @@ export class HorarioPage {
 		});
 
 		alert.addButton({
-		  text: 'OK',
+		  text: 'Enviar dados',
 		  handler: data => {
 				console.log('Checkbox data:', data);
 				this.testCheckboxOpen   = false;
@@ -600,10 +600,10 @@ export class HorarioPage {
 		//string JSON contendo mask e programacoes de horarios
 		//global.pl1 ou pl1 ?
 		this.texto = " \n { \"m\": " + this.global.mask + ", \"pl1\": \"" + this.global.pl1 + "\", \"pl2\": \"" + this.global.pl2 + "\", \"pd1\": \"" + this.global.pd1 + "\", \"pd2\": \"" + this.global.pd2 + "\" } ";
-
+		//alert(this.texto); Testando se o texto esta correto.
 		//enviar
 		console.log(this.texto);
-		this.bluetoothSerial.write(this.texto);
+		this.bluetoothSerial.write(this.texto).then( (success) => { alert (success);} , (error) => {alert(error);}  );
 
 		//debug
 		//carrega numeros tratados de global para event
@@ -620,6 +620,7 @@ export class HorarioPage {
 
 
 	Num2Hour(p) { //p = pl1, pl2, pd1, pd2 ...
+		/*
 		var n = parseFloat(p); //ou ParseFloat() ? ou parseInt()?
 		//1243 --> 1243.0 = n
 		//808  --> 808.0  = n
@@ -646,10 +647,22 @@ export class HorarioPage {
 
 		//sem o teste
 		//return h.toString();
+		*/
+
+		// FEITO POR LUCAS >>>>>>>>> PARA RESOLVER PROBLEMA COM 00:00 NAO LIDAREMOS COM NUMBER APENAS COM STRING'S
+		if(p.length == 3) {
+			//alert(p + "l=3 horas " + p[0]);
+			return p[0];
+		}
+		else {
+			//alert(p + "l=4 horas " + p[0] + "" + p[1])
+			return p[0] + "" + p[1];
+		}
 
 	}
 
 	Num2Min(p) { //p = pl1, pl2, pd1, pd2 ...
+		/*
 		var n = parseFloat(p); //ou ParseFloat() ? ou parseInt()?
 		//1243 --> 1243.0 = n
 
@@ -669,6 +682,15 @@ export class HorarioPage {
 		} else {
 			return m.toString();
 		}
+		*/
+		if(p.length == 3) {
+			//alert(p + "l=3 minutos " + p[1] + "" + p[2]);
+			return p[1] + "" + p[2];
+		}
+		else {
+			//alert(p + "l=4 minutos " +p[2] + "" + p[3]);
+			return p[2] + "" + p[3];
+		}
 	}
 
 	//implementar um flagEvent aqui...
@@ -678,7 +700,7 @@ export class HorarioPage {
 	numerosTratados(){
 		this.a1 = this.Num2Hour(this.pl1);
 		this.a2 = this.Num2Min (this.pl1);
-
+		//alert("a1 " + this.a1 + "a2 " + this.a2);
 		this.b1 = this.Num2Hour(this.pd1);
 		this.b2 = this.Num2Min (this.pd1);
 

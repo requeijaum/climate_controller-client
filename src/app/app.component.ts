@@ -142,7 +142,6 @@ export class MyApp {
           
                     //this.global.recebido = "{\"a\":0,\"b\":0,\"m\":0,\"p\":1,\"pd1\":1200,\"pd2\":1740,\"pl1\":1000,\"pl2\":1630,\"s\":0,\"t1\":22,\"t2\":26,\"t3\":29,\"tt\":15}";
       
-      
                     //testar se o objeto que vai pra global está vazio
           
                     //https://stackoverflow.com/questions/679915/how-do-i-test-for-an-empty-javascript-object
@@ -155,9 +154,9 @@ export class MyApp {
           
       
           
-                    if ( Object.getOwnPropertyNames(ObjetoNovo).length == 0) {
+                    if ( Object.getOwnPropertyNames(ObjetoNovo).length != 13) {
             
-                      console.log("ObjetoNovo \"JSON.parse(this.global.recebido está vazio!\" ");
+                      console.log("ObjetoNovo \"JSON.parse(this.global.recebido nao esta completo!\" ");
                       /*
                       let alert = this.alertCtrl.create({                  // success = (data) => alert(data);
                         title: 'DEU MERDA',

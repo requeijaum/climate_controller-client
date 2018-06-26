@@ -44,6 +44,7 @@ export class TemperaturaPage {
 			this.aumentouTmin = false;
 			this.diminuiuTmax = false;
 			this.diminuiuTmin = false;
+			this.alterouTtrigger = false;
 
 			//bluetoothSerial.enable();
 			//bluetoothSerial.connect(this.address);
@@ -143,9 +144,8 @@ export class TemperaturaPage {
 					this.diminuiuTmin = false;
 					this.tempaux = 0;
 				}
-
-				if(this.alterouTtrigger && this.global.tt == this.tt) {               // NAO ESTA FUNCIONANDO AINDA!
-					this.loader.dimiss();
+				if(this.alterouTtrigger && this.global.tt == this.ttaux) {               // NAO ESTA FUNCIONANDO AINDA!
+					this.loader.dismiss();
 					this.alterouTtrigger = false;
 					this.ttaux = 0;
 				}
@@ -473,11 +473,12 @@ export class TemperaturaPage {
 						this.tt = parseInt(data.minutos);
 
 						this.texto = "\n { \"tt\": " + this.tt + " } ";
+						
 						this.bluetoothSerial.write(this.texto);
 						console.log(this.texto);
 						
 						//Reunião: o comando abaixo pode estar redundante...
-						//this.global.putTtrigger(this.tt);
+						//this.global.putTtrigger(this.tt); Estava redundante e podia causar problemas no codigo.
 						this.ttaux = this.tt;
 						this.alterouTtrigger = true;
 						this.loader = this.loadingCtrl.create({

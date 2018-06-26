@@ -97,7 +97,7 @@ export class ConectarPage {
 							{
 							  text: 'Ok',
 							  handler: () => {
-								console.log('Apertou ok!');
+									console.log('Apertou ok!');
 							  }
 							},
 						  ]
