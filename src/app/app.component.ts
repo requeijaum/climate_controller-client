@@ -151,11 +151,9 @@ export class MyApp {
                     //implementar um promisse pra error handling
           
                     this.global.putObjetoNovo_length (Object.getOwnPropertyNames(ObjetoNovo).length);
+                    
           
-      
-          
-                    if ( Object.getOwnPropertyNames(ObjetoNovo).length != 13) {
-            
+                    if ( Object.getOwnPropertyNames(ObjetoNovo).length != 10) {
                       console.log("ObjetoNovo \"JSON.parse(this.global.recebido nao esta completo!\" ");
                       /*
                       let alert = this.alertCtrl.create({                  // success = (data) => alert(data);
@@ -176,7 +174,7 @@ export class MyApp {
       
                     //Reunião: a seguinte lógica pode dar problema...?
       
-                    if ( Object.getOwnPropertyNames(ObjetoNovo).length  == 13) {
+                    if ( Object.getOwnPropertyNames(ObjetoNovo).length  == 10) {
                       // &... é igual ao objeto antigo, hehe
                       if ( !(Object.is( this.global.JSONnovo , ObjetoNovo) )) { //if (not(boolean))
                         //se antigo !== novo

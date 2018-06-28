@@ -599,7 +599,7 @@ export class HorarioPage {
 
 		//string JSON contendo mask e programacoes de horarios
 		//global.pl1 ou pl1 ?
-		this.texto = " \n { \"m\": " + this.global.mask + ", \"pl1\": \"" + this.global.pl1 + "\", \"pl2\": \"" + this.global.pl2 + "\", \"pd1\": \"" + this.global.pd1 + "\", \"pd2\": \"" + this.global.pd2 + "\" } ";
+		this.texto = " \n { \"m\": " + this.global.mask + " , \"pl1\": \"" + this.global.pl1 + "\" , \"pl2\": \"" + this.global.pl2 + "\" , \"pd1\": \"" + this.global.pd1 + "\" , \"pd2\": \"" + this.global.pd2 + "\" } ";
 		//alert(this.texto); Testando se o texto esta correto.
 		//enviar
 		console.log(this.texto);
