@@ -138,7 +138,14 @@ export class HorarioPage {
 				console.log("temp.ts - setInterval() funciona!");
 
 				this.carregarVars();
-
+				//alert("pd1: " + this.pd1 + " pd1 aux: " + this.pd1aux + " pd1global: " + this.global.pd1 );
+				if(this.alteroudados && this.maskaux == this.global.mask && this.pl1aux == this.global.pl1 && this.pd1aux == this.global.pd1 && this.pl2aux == this.global.pl2 && this.pd2aux == this.global.pd2) {
+					this.alteroudados = false;
+					this.loader.dismiss();
+					this.numerosTratados();
+					this.carregarEvent();
+				}
+				this.pegaEvent();
 				//this.carregarEvent();
 
 				//ver uma flagEvent aí
@@ -196,15 +203,15 @@ export class HorarioPage {
 
 		this.numerosTratados();
 
-
-		this.f_pl1();	this.f_pl2();	this.f_pd1(); 	this.f_pd2();
-
 		//testar
 		this.flagComm = this.global.flagComm;
 
 		console.log("carregarVars()");
 	}
 
+	pegaEvent() {
+		this.f_pl1();	this.f_pl2();	this.f_pd1(); 	this.f_pd2();
+	}
 	salvarVars(){
 		//this.global.putPL1(this.pl1);
 		//this.global.putPL2(this.pl2);
@@ -259,53 +266,60 @@ export class HorarioPage {
 	//preciso verificar se consigo manipular os valores dentro de event.
 
 	f_pl1(){
-
+		if(this.pl1 != this.event.PL1.replace(":", "")) {
+			this.alteroudados = true;
+		}
 		this.pl1 = this.event.PL1.replace(":", "");
-		this.pl1aux = this.pl1;
 		//this.pl1 = parseInt(pl1);
 		//this.texto = "\n { \"pl1\": " + this.pl1 + " } \r";
 		//console.log(this.texto);
 		//this.bluetoothSerial.write(this.texto);
 
-		this.global.putPL1(this.pl1);
+		//this.global.putPL1(this.pl1);
 	}
 
 	f_pl2(){
-
+		if(this.pl2 != this.event.PL2.replace(":", "")) {
+			this.alteroudados = true;
+		}
 		this.pl2 = this.event.PL2.replace(":", "");
-		this.pl2aux = this.pl2;
 
 		//this.pl2 = parseInt(pl2);
 		//this.texto = "\n { \"pl2\": " + this.pl2 + " } \r";
 		//console.log(this.texto);
 		//this.bluetoothSerial.write(this.texto);
 
-		this.global.putPL2(this.pl2);
+		//this.global.putPL2(this.pl2);
 	}
 
 	f_pd1(){
-
+		if(this.pd1 != this.event.PD1.replace(":", "")) {
+			this.alteroudados = true;
+		}
 		this.pd1 = this.event.PD1.replace(":", "");
-		this.pd1aux = this.pd1;
 
 		//this.pd1 = parseInt(pd1);
 		//this.texto = "\n { \"pd1\": " + this.pd1 + " } \r";
 		//console.log(this.texto);
 		//this.bluetoothSerial.write(this.texto);
 
-		this.global.putPD1(this.pd1);
+		//this.global.putPD1(this.pd1);
 	}
 
 	f_pd2(){
+
+		if(this.pd2 != this.event.PD2.replace(":", "")) {
+			this.alteroudados = true;
+		}
 		this.pd2 = this.event.PD2.replace(":", "");
-		this.pd2aux = this.pd2;
+
 
 		//this.pd2 = parseInt(pd2);
 		//this.texto = "\n { \"pd2\": " + this.pd2 + " } \r";
 		//console.log(this.texto);
 		//this.bluetoothSerial.write(this.texto);
 
-		this.global.putPD2(this.pd2);
+		//this.global.putPD2(this.pd2);
 	}
 
 
@@ -423,7 +437,7 @@ export class HorarioPage {
 
 				//aqui, olha
 				//as checkboxes alteram this.dias... vamos recarregar pra essa page
-				this.global.putDias(this.dias);
+				//this.global.putDias(this.dias);
 
 				this.enviaCheckbox();
 
@@ -527,7 +541,7 @@ export class HorarioPage {
 
 		   //se "dias" contem algo --> mask eh atribuido um tal valor
 		   //depois enviar { m: mask }
-			this.dias = this.global.getDias();
+			//this.dias = this.global.getDias();
 
 			//this.texto = " " + this.dias + " " ;  // retirei caracteres especiais - pode bugar
 			//this.bluetoothSerial.write(this.texto);
@@ -556,7 +570,7 @@ export class HorarioPage {
 
 			//possivel conflito no estado inicial e ion-radio
 			//usar alguma flag?
-
+			this.maskaux = this.mask;
 			this.mask = 0;
 
 
@@ -590,12 +604,15 @@ export class HorarioPage {
 				this.mask = this.mask + 64;
 			}
 
+			if(this.mask != this.maskaux ) {
+				this.alteroudados = true;
+			}
 
-			this.global.putMask(this.mask);
+			//this.global.putMask(this.mask);
 
 		    //enviar e guardar global.mask
 			//this.texto = " { \"m\": " + this.mask + " } ";
-			this.global.putMask(this.mask);
+			//this.global.putMask(this.mask);
 			this.enviaProgs();
 			//console.log(this.texto);
 			//this.bluetoothSerial.write(this.texto);
@@ -620,26 +637,31 @@ export class HorarioPage {
 	enviaProgs(){	//executado a cada configuracao de dias ( {m : 127} )
 
 		//precarrega valores... o setInterval original so tinha isso
-		this.carregarVars();
+		//this.carregarVars();
 
 		//string JSON contendo mask e programacoes de horarios
 		//global.pl1 ou pl1 ?
-		this.texto = " \n { \"m\": " + this.global.mask + " , \"pl1\": \"" + this.global.pl1 + "\" , \"pl2\": \"" + this.global.pl2 + "\" , \"pd1\": \"" + this.global.pd1 + "\" , \"pd2\": \"" + this.global.pd2 + "\" } ";
+		this.texto = " \n { \"m\": " + this.mask + " , \"pl1\": \"" + this.pl1 + "\" , \"pl2\": \"" + this.pl2 + "\" , \"pd1\": \"" + this.pd1 + "\" , \"pd2\": \"" + this.pd2 + "\" } ";
+		this.maskaux = this.mask;
+		this.pl1aux = this.pl1;
+		this.pl2aux = this.pl2;
+		this.pd1aux = this.pd1;
+		this.pd2aux = this.pd2;
 		//alert(this.texto); Testando se o texto esta correto.
 		//enviar
 		console.log(this.texto);
-		this.bluetoothSerial.write(this.texto).then( (success) => { alert (success);} , (error) => {alert(error);}  );
-		/*this.loader = this.loadingCtrl.create({
+		this.bluetoothSerial.write(this.texto).then( (success) => { /*alert (success);*/} , (error) => { /*alert(error);*/}  );
+		this.loader = this.loadingCtrl.create({
 			content: "Aguarde enquanto o dispositivo processa seu comando...",
 		  });
 		this.loader.present();
 		setTimeout( () => {
-			if(this.) {
+			if(this.alteroudados) {
 				alert("Ocorreu um erro no envio/recebimento do dado.");
 				this.loader.dismiss();
 			}
 			
-		 } , 6000);*/
+		 } , 6000);
 
 		//debug
 		//carrega numeros tratados de global para event
