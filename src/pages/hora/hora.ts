@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { BluetoothSerial } from '@ionic-native/bluetooth-serial';
 
 //tentar travar a saida do aplicativo caso aperte o botao de voltar
-import { NavController , NavParams } from 'ionic-angular';
+import { NavController , NavParams, LoadingController } from 'ionic-angular';
 import { Platform } from 'ionic-angular';
 
 import { AlertController } from 'ionic-angular';
@@ -26,7 +26,8 @@ export class HorarioPage {
 					public  navCtrl			: NavController,
 					public  navParams		: NavParams,
 					public  platform		: Platform,
-					public  global			: GlobalVariables
+					public  global			: GlobalVariables,
+					public loadingCtrl: LoadingController
 					)
 
 		{
@@ -80,6 +81,16 @@ export class HorarioPage {
 	mask: number;
 	semana: any;
 
+	pl1aux: string; // Implementando o loader
+	pl2aux: string;
+	pd1aux: string;
+	pd2aux: string;
+	maskaux: number;
+	alteroudados: boolean;
+
+	public loader: any;
+
+
 
 	//-------------------------------------------------------------------
 	//debug
@@ -127,6 +138,7 @@ export class HorarioPage {
 				console.log("temp.ts - setInterval() funciona!");
 
 				this.carregarVars();
+
 				//this.carregarEvent();
 
 				//ver uma flagEvent aí
@@ -164,6 +176,8 @@ export class HorarioPage {
 
 	//testando a flag de comm
 	if (this.global.flagComm == false) {
+
+
 		this.pl1 	= this.global.getPL1();
 		this.pl2 	= this.global.getPL2();
 		this.pd1	= this.global.getPD1();
@@ -247,39 +261,50 @@ export class HorarioPage {
 	f_pl1(){
 
 		this.pl1 = this.event.PL1.replace(":", "");
+		this.pl1aux = this.pl1;
 		//this.pl1 = parseInt(pl1);
 		//this.texto = "\n { \"pl1\": " + this.pl1 + " } \r";
 		//console.log(this.texto);
 		//this.bluetoothSerial.write(this.texto);
+
 		this.global.putPL1(this.pl1);
 	}
 
 	f_pl2(){
 
 		this.pl2 = this.event.PL2.replace(":", "");
+		this.pl2aux = this.pl2;
+
 		//this.pl2 = parseInt(pl2);
 		//this.texto = "\n { \"pl2\": " + this.pl2 + " } \r";
 		//console.log(this.texto);
 		//this.bluetoothSerial.write(this.texto);
+
 		this.global.putPL2(this.pl2);
 	}
 
 	f_pd1(){
 
 		this.pd1 = this.event.PD1.replace(":", "");
+		this.pd1aux = this.pd1;
+
 		//this.pd1 = parseInt(pd1);
 		//this.texto = "\n { \"pd1\": " + this.pd1 + " } \r";
 		//console.log(this.texto);
 		//this.bluetoothSerial.write(this.texto);
+
 		this.global.putPD1(this.pd1);
 	}
 
 	f_pd2(){
 		this.pd2 = this.event.PD2.replace(":", "");
+		this.pd2aux = this.pd2;
+
 		//this.pd2 = parseInt(pd2);
 		//this.texto = "\n { \"pd2\": " + this.pd2 + " } \r";
 		//console.log(this.texto);
 		//this.bluetoothSerial.write(this.texto);
+
 		this.global.putPD2(this.pd2);
 	}
 
@@ -604,6 +629,17 @@ export class HorarioPage {
 		//enviar
 		console.log(this.texto);
 		this.bluetoothSerial.write(this.texto).then( (success) => { alert (success);} , (error) => {alert(error);}  );
+		/*this.loader = this.loadingCtrl.create({
+			content: "Aguarde enquanto o dispositivo processa seu comando...",
+		  });
+		this.loader.present();
+		setTimeout( () => {
+			if(this.) {
+				alert("Ocorreu um erro no envio/recebimento do dado.");
+				this.loader.dismiss();
+			}
+			
+		 } , 6000);*/
 
 		//debug
 		//carrega numeros tratados de global para event

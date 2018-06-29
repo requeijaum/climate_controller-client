@@ -295,6 +295,13 @@ export class TemperaturaPage {
 				content: "Aguarde enquanto o dispositivo processa seu comando...",
 			  });
 			this.loader.present();
+			setTimeout( () => {
+				if(this.aumentouTmin) {
+					alert("Ocorreu um erro no envio/recebimento do dado.");
+					this.loader.dismiss();
+				}
+				
+			 } , 6000);
 		}
 		else {
 			let alert = this.alertCtrl.create( {
@@ -330,6 +337,13 @@ export class TemperaturaPage {
 				content: "Aguarde enquanto o dispositivo processa seu comando...",
 			  });
 			this.loader.present();
+			setTimeout( () => {
+				if(this.aumentouTmax) {
+					alert("Ocorreu um erro no envio/recebimento do dado.");
+					this.loader.dismiss();
+				}
+				
+			 } , 6000);
 		}
 		else {                                                // Se o aumento feito resultar em uma temperatura maior do que 29, não se deve aumentar. Ou seja, não faz nada. TESTE
 			let alert = this.alertCtrl.create( {
@@ -364,7 +378,13 @@ export class TemperaturaPage {
 				content: "Aguarde enquanto o dispositivo processa seu comando...",
 			  });
 			this.loader.present();
-			
+			setTimeout( () => {
+				if(this.diminuiuTmin) {
+					alert("Ocorreu um erro no envio/recebimento do dado.");
+					this.loader.dismiss();
+				}
+				
+			 } , 6000);
 
 
 		}
@@ -403,6 +423,13 @@ export class TemperaturaPage {
 				content: "Aguarde enquanto o dispositivo processa seu comando...",
 			  });
 			this.loader.present();
+			setTimeout( () => {
+				if(this.diminuiuTmax) {
+					alert("Ocorreu um erro no envio/recebimento do dado.");
+					this.loader.dismiss();
+				}
+				
+			 } , 6000);
 		}
 		else {
 			let alert = this.alertCtrl.create( {
@@ -485,6 +512,25 @@ export class TemperaturaPage {
 							content: "Aguarde enquanto o dispositivo processa seu comando...",
 						  });
 						this.loader.present();
+						setTimeout( () => {
+							if(this.alterouTtrigger) {
+								let alert = this.alertCtrl.create({
+									title: "Erro",
+									message: "Ocorreu um erro no envio/recebimento do dado.",
+									buttons: [
+										{
+											text: 'Ok',
+											handler: () => {
+												console.log("Clicou em ok!");
+											}
+										}
+									]
+								})
+								alert.present();
+								this.loader.dismiss();
+							}
+							
+						 } , 6000);
 					}
 				 }
 			]
