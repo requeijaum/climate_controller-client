@@ -133,24 +133,34 @@ export class HorarioPage {
 
 
 		if (this.platform.is('android')) {
+			//setInterval(() => {
+		//		alert("globalmask = " + this.global.mask + " global.pl1 = " + this.global.pl1 + " global.pl2 = " + this.global.pl2 + " global.pd1 = " + this.global.pd1 + " global.pd2 = " + this.global.pd2  );
+	//	}, 5000);
 			this.global.horaTimer = setInterval(() => {
 
 				console.log("temp.ts - setInterval() funciona!");
 
 				this.carregarVars();
 				//alert("pd1: " + this.pd1 + " pd1 aux: " + this.pd1aux + " pd1global: " + this.global.pd1 );
-				if(this.alteroudados && this.maskaux == this.global.mask && this.pl1aux == this.global.pl1 && this.pd1aux == this.global.pd1 && this.pl2aux == this.global.pl2 && this.pd2aux == this.global.pd2) {
+				if(this.alteroudados && (this.maskaux == this.global.mask) && (this.pl1aux == this.global.pl1) && (this.pd1aux == this.global.pd1) && (this.pl2aux == this.global.pl2) && (this.pd2aux == this.global.pd2) ) {
 					this.alteroudados = false;
 					this.loader.dismiss();
+					this.carregarVars();
 					this.numerosTratados();
 					this.carregarEvent();
+					this.maskaux = -1;
+					this.pl1aux = "";
+					this.pl2aux = "";
+					this.pd1aux = "";
+					this.pd2aux = "";
+
 				}
 				this.pegaEvent();
 				//this.carregarEvent();
 
 				//ver uma flagEvent aí
 				//atualmente ta com bug temporal
-
+				
 
 			}, 100); // era 100
 		}
@@ -269,7 +279,7 @@ export class HorarioPage {
 		if(this.pl1 != this.event.PL1.replace(":", "")) {
 			this.alteroudados = true;
 		}
-		this.pl1 = this.event.PL1.replace(":", "");
+		//this.pl1 = this.event.PL1.replace(":", "");
 		//this.pl1 = parseInt(pl1);
 		//this.texto = "\n { \"pl1\": " + this.pl1 + " } \r";
 		//console.log(this.texto);
@@ -282,7 +292,7 @@ export class HorarioPage {
 		if(this.pl2 != this.event.PL2.replace(":", "")) {
 			this.alteroudados = true;
 		}
-		this.pl2 = this.event.PL2.replace(":", "");
+		//this.pl2 = this.event.PL2.replace(":", "");
 
 		//this.pl2 = parseInt(pl2);
 		//this.texto = "\n { \"pl2\": " + this.pl2 + " } \r";
@@ -296,7 +306,7 @@ export class HorarioPage {
 		if(this.pd1 != this.event.PD1.replace(":", "")) {
 			this.alteroudados = true;
 		}
-		this.pd1 = this.event.PD1.replace(":", "");
+		//this.pd1 = this.event.PD1.replace(":", "");
 
 		//this.pd1 = parseInt(pd1);
 		//this.texto = "\n { \"pd1\": " + this.pd1 + " } \r";
@@ -311,7 +321,7 @@ export class HorarioPage {
 		if(this.pd2 != this.event.PD2.replace(":", "")) {
 			this.alteroudados = true;
 		}
-		this.pd2 = this.event.PD2.replace(":", "");
+		//this.pd2 = this.event.PD2.replace(":", "");
 
 
 		//this.pd2 = parseInt(pd2);
@@ -604,7 +614,7 @@ export class HorarioPage {
 				this.mask = this.mask + 64;
 			}
 
-			if(this.mask != this.maskaux ) {
+			if(this.mask != this.maskaux ) { // Verificando se houve alteração de dados.
 				this.alteroudados = true;
 			}
 
@@ -641,12 +651,13 @@ export class HorarioPage {
 
 		//string JSON contendo mask e programacoes de horarios
 		//global.pl1 ou pl1 ?
-		this.texto = " \n { \"m\": " + this.mask + " , \"pl1\": \"" + this.pl1 + "\" , \"pl2\": \"" + this.pl2 + "\" , \"pd1\": \"" + this.pd1 + "\" , \"pd2\": \"" + this.pd2 + "\" } ";
-		this.maskaux = this.mask;
-		this.pl1aux = this.pl1;
-		this.pl2aux = this.pl2;
-		this.pd1aux = this.pd1;
-		this.pd2aux = this.pd2;
+		this.pl1aux = this.event.PL1.replace(":", "");
+		this.pl2aux = this.event.PL2.replace(":", "");
+		this.pd1aux = this.event.PD1.replace(":", "");
+		this.pd2aux = this.event.PD2.replace(":", "");
+		this.texto = " \n { \"m\": " + this.mask + " , \"pl1\": \"" + this.pl1aux + "\" , \"pl2\": \"" + this.pl2aux + "\" , \"pd1\": \"" + this.pd1aux + "\" , \"pd2\": \"" + this.pd2aux + "\" } ";
+		this.maskaux = this.mask;	
+		//alert(" \n { \"m\": " + this.mask + " , \"pl1\": \"" + this.pl1aux + "\" , \"pl2\": \"" + this.pl2aux + "\" , \"pd1\": \"" + this.pd1aux + "\" , \"pd2\": \"" + this.pd2aux + "\" } ");
 		//alert(this.texto); Testando se o texto esta correto.
 		//enviar
 		console.log(this.texto);

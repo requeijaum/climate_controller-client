@@ -7,6 +7,7 @@ import { AlertController } from 'ionic-angular';
 import { NavController , NavParams } from 'ionic-angular';
 import { Platform } from 'ionic-angular';
 import { GlobalVariables } from '../../providers/globalvars/globalvars';
+//import { MyApp } from '../../app/app.component';
 
 @Component({
   selector: 'page-conectar',
@@ -28,7 +29,8 @@ export class ConectarPage {
 				public  navCtrl: NavController,
 				public  navParams: NavParams,
 				public  platform: Platform,
-				public  global			: GlobalVariables
+				public  global			: GlobalVariables,
+				//public myApp: MyApp
 				) 
   {
 	platform.registerBackButtonAction( () => { this.voltar(); } , 1 );
@@ -103,6 +105,8 @@ export class ConectarPage {
 						  ]
 						});
 						alert.present();
+						//this.myApp.openConnect();
+						this.navCtrl.setRoot(ConectarPage);
 						console.log(error);
 					};
 

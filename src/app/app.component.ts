@@ -174,7 +174,7 @@ export class MyApp {
       
                     //Reunião: a seguinte lógica pode dar problema...?
       
-                    if ( Object.getOwnPropertyNames(ObjetoNovo).length  == 10) {
+                    if ( Object.getOwnPropertyNames(ObjetoNovo).length  >= 10) { // >= 10 para simulador. == 10 para arduino atualizado.
                       // &... é igual ao objeto antigo, hehe
                       if ( !(Object.is( this.global.JSONnovo , ObjetoNovo) )) { //if (not(boolean))
                         //se antigo !== novo
@@ -242,26 +242,30 @@ export class MyApp {
     // close the menu when clicking a link from the menu
     this.menu.close();
     // navigate to the new page if it is not the current page
-	if( (page.component == TemperaturaPage || page.component == HorarioPage) && this.global.getBluetoothConectado() == false ) {
-		let alert = this.alertCtrl.create( {
-				title: 'Erro',
-				message: 'Voce precisa se conectar ao dispositivo antes de acessar esta página.',
-				buttons: [ 
-				{ text: 'Ok',
-					handler: () => {
-						console.log('Clicou em Ok.');
-						if(this.nav.getActive().component != this.pages[1].component) {
-							this.openPage(this.pages[1]);
-							console.log('Abriu a página conectar a partir de: ' + this.nav.getActive().name );
-						}
-					}
-				} ]
-			} );
-			alert.present();
-	}
-	else {
-		this.nav.setRoot(page.component);
-	}
+    if( (page.component == TemperaturaPage || page.component == HorarioPage) && this.global.getBluetoothConectado() == false ) {
+      let alert = this.alertCtrl.create( {
+          title: 'Erro',
+          message: 'Voce precisa se conectar ao dispositivo antes de acessar esta página.',
+          buttons: [ 
+          { text: 'Ok',
+            handler: () => {
+              console.log('Clicou em Ok.');
+              if(this.nav.getActive().component != this.pages[1].component) {
+                this.openPage(this.pages[1]);
+                console.log('Abriu a página conectar a partir de: ' + this.nav.getActive().name );
+              }
+            }
+          } ]
+        } );
+        alert.present();
+    }
+    else {
+      this.nav.setRoot(page.component);
+    }
+  }
+
+  openConnect() {
+    this.openPage(this.pages[1]);
   }
 
   
