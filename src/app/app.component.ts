@@ -26,8 +26,8 @@ import { PegadorJSON } from '../providers/pegajson/pegajson';
 export class MyApp {
 	@ViewChild(Nav) nav: Nav;
 	
-	public recebido : string;
-	public JSONnovo;
+  public recebido : string;
+  public JSONnovo;
 	
 	public onError  : any; //acho que n uso... mas n vou mexer //eu uso isso???
 	
@@ -43,7 +43,7 @@ export class MyApp {
 		public splashScreen: 	      SplashScreen,
 		public global: 			        GlobalVariables,
 		public alertCtrl:           AlertController,
-    public PegadorJSON:         PegadorJSON,
+    public PegadorJSON:         PegadorJSON
   ) 
 	{
 
@@ -63,7 +63,7 @@ export class MyApp {
 	  ];
     
     this.global.debug = 0;
-  
+    this.global.JSONvalido = false;
   }
     
   initializeApp() {
@@ -145,7 +145,13 @@ export class MyApp {
                     //testar se o objeto que vai pra global está vazio
           
                     //https://stackoverflow.com/questions/679915/how-do-i-test-for-an-empty-javascript-object
-                    var ObjetoNovo = JSON.parse(this.global.recebido);
+                    try {
+                      var ObjetoNovo = JSON.parse(this.global.recebido);
+                      this.global.JSONvalido = true;
+                    }
+                    catch (SyntaxError) {
+                      console.log("String recebida nao é um JSON.");
+                    }
                     //alert(JSON.stringify(ObjetoNovo));
       
                     //implementar um promisse pra error handling
@@ -242,7 +248,7 @@ export class MyApp {
     // close the menu when clicking a link from the menu
     this.menu.close();
     // navigate to the new page if it is not the current page
-    if( (page.component == TemperaturaPage || page.component == HorarioPage) && this.global.getBluetoothConectado() == false ) {
+    if( (page.component == TemperaturaPage || page.component == HorarioPage) && !this.global.getBluetoothConectado() ) {
       let alert = this.alertCtrl.create( {
           title: 'Erro',
           message: 'Voce precisa se conectar ao dispositivo antes de acessar esta página.',
@@ -258,6 +264,42 @@ export class MyApp {
           } ]
         } );
         alert.present();
+    }
+    else if( (page.component == TemperaturaPage || page.component == HorarioPage) && this.global.getBluetoothConectado() && !this.global.JSONvalido ) {
+      let alert = this.alertCtrl.create( {
+        title: 'Erro',
+        message: 'O dispositivo que você está conectado não é compatível com o funcionamento do aplicativo. Se você tem certeza de que se conectou ao dispositivo correto, comunique um responsável.',
+        buttons: [ 
+        { text: 'Ok',
+          handler: () => {
+            console.log('Clicou em Ok.');
+          }
+        } 
+      ]
+      } );
+      alert.present();
+    }
+    else if( (this.nav.getActive().component == this.pages[3].component) && this.global.alteroudados) {
+        let alert = this.alertCtrl.create({
+          title: "Suas alterações não foram enviadas.",
+          message: "Envie suas alterações pelo botao, ou saia sem enviar.",
+          buttons: [
+            {
+              text: "Ok",
+              handler: () => {
+                console.log("Apertou Ok");
+              }
+            },
+            {
+              text: "Sair sem enviar.",
+              handler: () => {
+                this.nav.setRoot(page.component);
+                console.log("Saiu sem enviar os dados.");
+              }
+            }
+          ]
+        });
+        alert.present();   
     }
     else {
       this.nav.setRoot(page.component);

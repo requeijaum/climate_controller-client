@@ -71,6 +71,12 @@ export class GlobalVariables {
 	//declarar var
 	public ObjetoNovo_length: number;
 
+	//variavel de alterou dados da pagina de horarios
+	public alteroudados: boolean;
+
+	// Verificar dispositivo
+	public JSONvalido: boolean;
+
 	//debug
 	public debug: number;
 

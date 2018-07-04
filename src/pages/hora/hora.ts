@@ -116,7 +116,7 @@ export class HorarioPage {
 		//normal... antes de entrar
 		this.carregarVars();
 		this.carregarEvent();
-
+		this.backflag = false;
 		//corrigir ion-radios no estado inicial da page?
 		//this.mask 	= this.global.getMask();
 
@@ -142,8 +142,8 @@ export class HorarioPage {
 
 				this.carregarVars();
 				//alert("pd1: " + this.pd1 + " pd1 aux: " + this.pd1aux + " pd1global: " + this.global.pd1 );
-				if(this.alteroudados && (this.maskaux == this.global.mask) && (this.pl1aux == this.global.pl1) && (this.pd1aux == this.global.pd1) && (this.pl2aux == this.global.pl2) && (this.pd2aux == this.global.pd2) ) {
-					this.alteroudados = false;
+				if(this.global.alteroudados && (this.maskaux == this.global.mask) && (this.pl1aux == this.global.pl1) && (this.pd1aux == this.global.pd1) && (this.pl2aux == this.global.pl2) && (this.pd2aux == this.global.pd2) ) {
+					this.global.alteroudados = false;
 					this.loader.dismiss();
 					this.carregarVars();
 					this.numerosTratados();
@@ -277,7 +277,7 @@ export class HorarioPage {
 
 	f_pl1(){
 		if(this.pl1 != this.event.PL1.replace(":", "")) {
-			this.alteroudados = true;
+			this.global.alteroudados = true;
 		}
 		//this.pl1 = this.event.PL1.replace(":", "");
 		//this.pl1 = parseInt(pl1);
@@ -290,7 +290,7 @@ export class HorarioPage {
 
 	f_pl2(){
 		if(this.pl2 != this.event.PL2.replace(":", "")) {
-			this.alteroudados = true;
+			this.global.alteroudados = true;
 		}
 		//this.pl2 = this.event.PL2.replace(":", "");
 
@@ -304,7 +304,7 @@ export class HorarioPage {
 
 	f_pd1(){
 		if(this.pd1 != this.event.PD1.replace(":", "")) {
-			this.alteroudados = true;
+			this.global.alteroudados = true;
 		}
 		//this.pd1 = this.event.PD1.replace(":", "");
 
@@ -319,7 +319,7 @@ export class HorarioPage {
 	f_pd2(){
 
 		if(this.pd2 != this.event.PD2.replace(":", "")) {
-			this.alteroudados = true;
+			this.global.alteroudados = true;
 		}
 		//this.pd2 = this.event.PD2.replace(":", "");
 
@@ -333,8 +333,26 @@ export class HorarioPage {
 	}
 
 
-
+	public backflag: boolean;
 	voltar(){
+		if(this.global.alteroudados && !this.backflag){
+			let alert = this.alertCtrl.create({
+				title: "Suas alterações não foram enviadas.",
+				message: "Você apertou o botao de voltar e suas alterações não foram enviadas.Deseja enviar suas alterações?",
+				buttons: [
+					{
+						text: "Enviar",
+						handler: () => {
+							this.backflag = false;
+							this.doCheckbox();
+							
+						}
+					}
+				]
+			});
+			alert.present();
+			this.backflag = true;
+		}
 		this.navCtrl.pop();
 		console.log("Apertou botao de voltar!");
 		return 0;
@@ -615,7 +633,7 @@ export class HorarioPage {
 			}
 
 			if(this.mask != this.maskaux ) { // Verificando se houve alteração de dados.
-				this.alteroudados = true;
+				this.global.alteroudados = true;
 			}
 
 			//this.global.putMask(this.mask);
@@ -667,7 +685,7 @@ export class HorarioPage {
 		  });
 		this.loader.present();
 		setTimeout( () => {
-			if(this.alteroudados) {
+			if(this.global.alteroudados) {
 				alert("Ocorreu um erro no envio/recebimento do dado.");
 				this.loader.dismiss();
 			}

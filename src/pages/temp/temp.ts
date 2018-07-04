@@ -498,41 +498,63 @@ export class TemperaturaPage {
 						//console.log("data.minutos" = data);
 						//pegar this.minutos, converter pra number e copiar pra this.tt
 						this.tt = parseInt(data.minutos);
-
-						this.texto = "\n { \"tt\": " + this.tt + " } ";
-						
-						this.bluetoothSerial.write(this.texto);
-						console.log(this.texto);
-						
-						//Reunião: o comando abaixo pode estar redundante...
-						//this.global.putTtrigger(this.tt); Estava redundante e podia causar problemas no codigo.
-						this.ttaux = this.tt;
-						this.alterouTtrigger = true;
-						this.loader = this.loadingCtrl.create({
-							content: "Aguarde enquanto o dispositivo processa seu comando...",
-						  });
-						this.loader.present();
-						setTimeout( () => {
-							if(this.alterouTtrigger) {
-								let alert = this.alertCtrl.create({
-									title: "Erro",
-									message: "Ocorreu um erro no envio/recebimento do dado.",
-									buttons: [
-										{
-											text: 'Ok',
-											handler: () => {
-												console.log("Clicou em ok!");
-											}
-										}
-									]
-								})
-								alert.present();
-								this.loader.dismiss();
-							}
+						if(this.tt <= 60) {
+							this.texto = "\n { \"tt\": " + this.tt + " } ";
 							
-						 } , 6000);
+							this.bluetoothSerial.write(this.texto);
+							console.log(this.texto);
+							
+							//Reunião: o comando abaixo pode estar redundante...
+							//this.global.putTtrigger(this.tt); Estava redundante e podia causar problemas no codigo.
+							this.ttaux = this.tt;
+							this.alterouTtrigger = true;
+							this.loader = this.loadingCtrl.create({
+								content: "Aguarde enquanto o dispositivo processa seu comando...",
+							});
+							this.loader.present();
+							setTimeout( () => {
+								if(this.alterouTtrigger) {
+									let alert = this.alertCtrl.create({
+										title: "Erro",
+										message: "Ocorreu um erro no envio/recebimento do dado.",
+										buttons: [
+											{
+												text: 'Ok',
+												handler: () => {
+													console.log("Clicou em ok!");
+												}
+											}
+										]
+									})
+									alert.present();
+									this.loader.dismiss();
+								}
+								
+							} , 6000);
+						}
+						else {
+							let subalert = this.alertCtrl.create({
+								title: "O tempo de ação deve ser menos de uma hora.",
+								message: "Aperte \"Ok\" para digitar um novo valor ou \"Cancelar\" para cancelar a ação.",
+								buttons: [
+									{
+										text: "Ok",
+										handler: () => {
+											this.alterarTtrigger();
+										}
+									},
+									{
+										text: "Cancelar",
+										handler: () => {
+											console.log("Apertou cancelar.");
+										}
+									}
+								]
+						});
+						subalert.present();
 					}
 				 }
+				}
 			]
 			}
 
