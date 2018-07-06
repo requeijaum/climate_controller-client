@@ -8,9 +8,23 @@ page-hora{
 		text-align: center;
 	}
 
+	#matutino {
+		text-align: center;
+		background-color: #f7f7f7;
+	}
+
+	#vespertino {
+		text-align: center;
+		background-color: #000000;
+	}
+
+	#vesptext {
+		color: #f0f5ff;
+	}
+
 	ion-col div {
 		background-color: #f0f5ff;
-		border: 1px solid #e6e9ee;
+		border: 1px solid #f0f5ff;
 		border-radius: 2px;
 		padding: 5px;
 		text-align: center;

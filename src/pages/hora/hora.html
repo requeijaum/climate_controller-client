@@ -35,30 +35,30 @@
 	<ion-grid>
 		<ion-row>
 
-			<ion-col>
+			<ion-col id="matutino">
 				<p>Turno Matutino</p>
 			</ion-col>
 
 
-			<ion-col>
-				<p>Turno Vespertino</p>
+			<ion-col id="vespertino">
+				<p id="vesptext">Turno Vespertino</p>
 			</ion-col>
 
 		</ion-row>
 
 		<ion-row>
-			<ion-col>
+			<ion-col id="matutino">
 				<button ion-button outline block >
 
-					<ion-datetime displayFormat="H:mm" pickerFormat="H mm" cancelText="CANCELAR" DoneText="OK" [(ngModel)]="event.PL1">
+					<ion-datetime displayFormat="H:mm" pickerFormat="H mm" max={{event.PD1}} cancelText="CANCELAR" DoneText="OK" [(ngModel)]="event.PL1">
 					</ion-datetime>
 
 				</button>
 			</ion-col>
 
-			<ion-col>
-				<button ion-button outline block >
-					<ion-datetime displayFormat="H:mm" pickerFormat="H mm" cancelText="CANCELAR" DoneText="OK" [(ngModel)]="event.PL2">
+			<ion-col id="vespertino">
+				<button ion-button outline block style="background-color:#f0f5ff;">
+					<ion-datetime displayFormat="H:mm" pickerFormat="H mm" min="12:00" max={{event.PD2}} cancelText="CANCELAR" DoneText="OK" [(ngModel)]="event.PL2">
 					</ion-datetime>
 				</button>
 			</ion-col>
@@ -66,16 +66,16 @@
 		</ion-row>
 
 		<ion-row>
-			<ion-col>
+			<ion-col id="matutino">
 				<button ion-button outline block >
-					<ion-datetime displayFormat="H:mm" pickerFormat="H mm" cancelText="CANCELAR" DoneText="OK" [(ngModel)]="event.PD1">
+					<ion-datetime displayFormat="H:mm" pickerFormat="H mm" min={{event.PL1}} max="11:59" cancelText="CANCELAR" DoneText="OK" [(ngModel)]="event.PD1">
 					</ion-datetime>
 				</button>
 			</ion-col>
 
-			<ion-col>
-				<button ion-button outline block >
-					<ion-datetime displayFormat="H:mm" pickerFormat="H mm" cancelText="CANCELAR" DoneText="OK" [(ngModel)]="event.PD2">
+			<ion-col id="vespertino">
+				<button ion-button outline block style="background-color:#f0f5ff;">
+					<ion-datetime displayFormat="H:mm" pickerFormat="H mm" min={{event.PL2}} cancelText="CANCELAR" DoneText="OK" [(ngModel)]="event.PD2">
 					</ion-datetime>
 				</button>
 			</ion-col>
