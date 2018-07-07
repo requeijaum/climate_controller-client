@@ -7,6 +7,7 @@ import { AlertController } from 'ionic-angular';
 import { NavController , NavParams } from 'ionic-angular';
 import { Platform } from 'ionic-angular';
 import { GlobalVariables } from '../../providers/globalvars/globalvars';
+//import { MyApp } from '../../app/app.component';
 
 @Component({
   selector: 'page-conectar',
@@ -28,18 +29,24 @@ export class ConectarPage {
 				public  navCtrl: NavController,
 				public  navParams: NavParams,
 				public  platform: Platform,
-				public  global			: GlobalVariables
+				public  global			: GlobalVariables,
+				//public myApp: MyApp
 				) 
   {
 	platform.registerBackButtonAction( () => { this.voltar(); } , 1 );
-		bluetoothSerial.enable();
-		this.pairedDevices = null;
-		this.bluetoothSerial.list().then((success) => {
+		bluetoothSerial.enable().then( () => {
+			this.pairedDevices = null;
+			this.bluetoothSerial.list().then((success) => {
 			this.pairedDevices = success;
 		},
 			(err) => {
-
+				console.log(err);
 			});
+		} , (err) => {
+			console.log(err);
+			alert("Ocorreu um erro ao iniciar o módulo bluetooth.");
+		})
+		
   }
 
 
@@ -97,12 +104,15 @@ export class ConectarPage {
 							{
 							  text: 'Ok',
 							  handler: () => {
-								console.log('Apertou ok!');
+									console.log('Apertou ok!');
 							  }
 							},
 						  ]
 						});
 						alert.present();
+						//this.myApp.openConnect();
+						this.navCtrl.setRoot(ConectarPage);
+						this.global.JSONvalido = false;
 						console.log(error);
 					};
 
@@ -111,7 +121,7 @@ export class ConectarPage {
 	if( this.global.bluetooth_connected == false ) {                 		// Se o aplicativo nao estiver conectado a um dispositivo, você o conecta ao dispositivo
 		let alert = this.alertCtrl.create({                            		// selecionado.
 		  title: 'Conectar',
-		  message: 'Você quer conectar com esse dispositivo?',
+		  message: "Você quer conectar este dispositivo?<br\>Nome do dispositivo:<br\>"+ name + "<br\>Endereço MAC do dispositivo:<br\>" + address,
 		  buttons: [
 			{
 			  text: 'Cancelar',
@@ -183,7 +193,8 @@ export class ConectarPage {
 						handler: () => {
 							this.unpairedDevices = null;                // Limpa lista de dispositivos, obrigando o usuário a buscar novamente.
 							this.bluetoothSerial.disconnect();
-				console.log('this.bluetoothSerial.disconnect()');
+							this.global.JSONvalido = false;
+							console.log('this.bluetoothSerial.disconnect()');
 						}
 					}
 				]

@@ -29,7 +29,7 @@ export class GlobalVariables {
 	public flagComm			:boolean;
 
 	public texto			: 	string;
-	public recebido			: any;
+	public recebido			: string;
 	public conectado		: boolean;
 
 	public JSONnovo;
@@ -46,10 +46,10 @@ export class GlobalVariables {
 	public p				: 	any;
 	public tt				:	any;
 
-	public pl1 				: 	number;
-	public pl2				: 	number;
-	public pd1 				: 	number;
-	public pd2 				: 	number;
+	public pl1 				: 	string; // e viavel testar como string para resolver problema do 0:00 ?????
+	public pl2				: 	string;
+	public pd1 				: 	string;
+	public pd2 				: 	string;
 
 	public mask				: 	number;
 	public dias;    		//objeto JSON, hehe
@@ -70,6 +70,12 @@ export class GlobalVariables {
 
 	//declarar var
 	public ObjetoNovo_length: number;
+
+	//variavel de alterou dados da pagina de horarios
+	public alteroudados: boolean;
+
+	// Verificar dispositivo
+	public JSONvalido: boolean;
 
 	//debug
 	public debug: number;
@@ -94,10 +100,10 @@ export class GlobalVariables {
 		this.t3		= 28;
 		this.p      = 0;			//teste
 
-		this.pl1	= 743;
-		this.pl2	= 1200;
-		this.pd1	= 1315;
-		this.pd2	= 1700;
+		this.pl1	= "743";
+		this.pl2	= "1200";
+		this.pd1	= "1315";
+		this.pd2	= "1700";
 
 		this.mask	= 64;  //diferente do array
 
@@ -125,10 +131,10 @@ export class GlobalVariables {
 			"b":0,
 			"m":0,
 			"p":0,
-			"pd1":1200,
-			"pd2":1700,
-			"pl1":700,
-			"pl2":1300,
+			"pd1": "1200",
+			"pd2": "1700",
+			"pl1": "0700" ,
+			"pl2": "1300",
 			"s":0,
 			"t1":15,
 			"t2":23,

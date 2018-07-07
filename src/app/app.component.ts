@@ -7,6 +7,7 @@ import { ConectarPage } from '../pages/02conectar/02conectar';
 import { TemperaturaPage } from '../pages/temp/temp';
 import { HorarioPage } from '../pages/hora/hora';
 import { DebugPage } from '../pages/debug/debug';
+
 //import { CommTestPage } from '../pages/commtest/commtest';
 //import { GridPage } from '../pages/flexbox/flexbox';
 //import { ListPage } from '../pages/list/list';
@@ -25,8 +26,8 @@ import { PegadorJSON } from '../providers/pegajson/pegajson';
 export class MyApp {
 	@ViewChild(Nav) nav: Nav;
 	
-	public recebido : string;
-	public JSONnovo;
+  public recebido : string;
+  public JSONnovo;
 	
 	public onError  : any; //acho que n uso... mas n vou mexer //eu uso isso???
 	
@@ -53,8 +54,8 @@ export class MyApp {
 		{ title: 'Controle do Fancoil - HEC'    , component: WelcomePage },
 		{ title: 'Conectar dispositivo'			    , component: ConectarPage },
 		{ title: 'Temperatura'					        , component: TemperaturaPage },
-		{ title: 'Horários de acionamento'		  , component: HorarioPage },
-		{ title: 'Pagina de Debug'              , component: DebugPage	},
+		{ title: 'Horários de acionamento'		  , component: HorarioPage }//,
+		//{ title: 'Pagina de Debug'              , component: DebugPage	},
 		//{ title: 'CommTest'						        , component: CommTestPage },
 		//{ title: 'GridPage'						        , component: GridPage },
 		//{ title: 'My First List'				      , component: ListPage },
@@ -62,7 +63,7 @@ export class MyApp {
 	  ];
     
     this.global.debug = 0;
-  
+    this.global.JSONvalido = false;
   }
     
   initializeApp() {
@@ -93,7 +94,7 @@ export class MyApp {
         
             //talvez esse if com && this.global.flagComm esteja travando tudo
 
-            if (this.global.bluetooth_connected && !this.global.flagComm) {  // Mudar e usar com promisse att: Ou usar a variavel global que voce criou bobao...
+            if (this.global.bluetooth_connected) {  // Mudar e usar com promisse att: Ou usar a variavel global que voce criou bobao...
               //alert("debug"); // Testando funcionamento da condicional
               /*this.bluetoothSerial.subscribeRawData()
                 .subscribe(
@@ -141,22 +142,25 @@ export class MyApp {
           
                     //this.global.recebido = "{\"a\":0,\"b\":0,\"m\":0,\"p\":1,\"pd1\":1200,\"pd2\":1740,\"pl1\":1000,\"pl2\":1630,\"s\":0,\"t1\":22,\"t2\":26,\"t3\":29,\"tt\":15}";
       
-      
                     //testar se o objeto que vai pra global está vazio
           
                     //https://stackoverflow.com/questions/679915/how-do-i-test-for-an-empty-javascript-object
-                    var ObjetoNovo = JSON.parse(this.global.recebido);
+                    try {
+                      var ObjetoNovo = JSON.parse(this.global.recebido);
+                      this.global.JSONvalido = true;
+                    }
+                    catch (SyntaxError) {
+                      console.log("String recebida nao é um JSON.");
+                    }
                     //alert(JSON.stringify(ObjetoNovo));
       
                     //implementar um promisse pra error handling
           
                     this.global.putObjetoNovo_length (Object.getOwnPropertyNames(ObjetoNovo).length);
+                    
           
-      
-          
-                    if ( Object.getOwnPropertyNames(ObjetoNovo).length == 0) {
-            
-                      console.log("ObjetoNovo \"JSON.parse(this.global.recebido está vazio!\" ");
+                    if ( Object.getOwnPropertyNames(ObjetoNovo).length != 10) {
+                      console.log("ObjetoNovo \"JSON.parse(this.global.recebido nao esta completo!\" ");
                       /*
                       let alert = this.alertCtrl.create({                  // success = (data) => alert(data);
                         title: 'DEU MERDA',
@@ -176,8 +180,7 @@ export class MyApp {
       
                     //Reunião: a seguinte lógica pode dar problema...?
       
-                    if ( Object.getOwnPropertyNames(ObjetoNovo).length  == 13) {
-                      this.global.debug++;
+                    if ( Object.getOwnPropertyNames(ObjetoNovo).length  >= 10) { // >= 10 para simulador. == 10 para arduino atualizado.
                       // &... é igual ao objeto antigo, hehe
                       if ( !(Object.is( this.global.JSONnovo , ObjetoNovo) )) { //if (not(boolean))
                         //se antigo !== novo
@@ -213,7 +216,7 @@ export class MyApp {
           
                     this.global.putMask		(this.global.JSONnovo.m);
            
-                    this.atualizarJSONnovo_typeof( this.global.getJSONnovo_typeof() );
+                    //this.atualizarJSONnovo_typeof( this.global.getJSONnovo_typeof() ); Aparentemente isso sumiu
           
                     //testar limpar
                     //Reunião: acho que isso dá merda?
@@ -245,27 +248,68 @@ export class MyApp {
     // close the menu when clicking a link from the menu
     this.menu.close();
     // navigate to the new page if it is not the current page
-	if( (page.component == TemperaturaPage || page.component == HorarioPage) && this.global.getBluetoothConectado() == false ) {
-		let alert = this.alertCtrl.create( {
-				title: 'Erro',
-				message: 'Voce precisa se conectar ao dispositivo antes de acessar esta página.',
-				buttons: [ 
-				{ text: 'Ok',
-					handler: () => {
-						console.log('Clicou em Ok.');
-						if(this.nav.getActive().component != this.pages[1].component) {
-							this.openPage(this.pages[1]);
-							console.log('Abriu a página conectar a partir de: ' + this.nav.getActive().name );
-						}
-					}
-				} ]
-			} );
-			alert.present();
-	}
-	else {
-		this.nav.setRoot(page.component);
-	}
+    if( (page.component == TemperaturaPage || page.component == HorarioPage) && !this.global.getBluetoothConectado() ) {
+      let alert = this.alertCtrl.create( {
+          title: 'Erro',
+          message: 'Voce precisa se conectar ao dispositivo antes de acessar esta página.',
+          buttons: [ 
+          { text: 'Ok',
+            handler: () => {
+              console.log('Clicou em Ok.');
+              if(this.nav.getActive().component != this.pages[1].component) {
+                this.openPage(this.pages[1]);
+                console.log('Abriu a página conectar a partir de: ' + this.nav.getActive().name );
+              }
+            }
+          } ]
+        } );
+        alert.present();
+    }
+    else if( (page.component == TemperaturaPage || page.component == HorarioPage) && this.global.getBluetoothConectado() && !this.global.JSONvalido ) {
+      let alert = this.alertCtrl.create( {
+        title: 'Erro',
+        message: 'O dispositivo que você está conectado não é compatível com o funcionamento do aplicativo. Se você tem certeza de que se conectou ao dispositivo correto, comunique um responsável.',
+        buttons: [ 
+        { text: 'Ok',
+          handler: () => {
+            console.log('Clicou em Ok.');
+          }
+        } 
+      ]
+      } );
+      alert.present();
+    }
+    else if( (this.nav.getActive().component == this.pages[3].component) && this.global.alteroudados) {
+        let alert = this.alertCtrl.create({
+          title: "Suas alterações não foram enviadas.",
+          message: "Envie suas alterações pelo botao, ou saia sem enviar.",
+          buttons: [
+            {
+              text: "Ok",
+              handler: () => {
+                console.log("Apertou Ok");
+              }
+            },
+            {
+              text: "Sair sem enviar.",
+              handler: () => {
+                this.nav.setRoot(page.component);
+                console.log("Saiu sem enviar os dados.");
+              }
+            }
+          ]
+        });
+        alert.present();   
+    }
+    else {
+      this.nav.setRoot(page.component);
+    }
   }
+
+  openConnect() {
+    this.openPage(this.pages[1]);
+  }
+
   
   /*
     //https://github.com/don/BluetoothSerial/issues/222
