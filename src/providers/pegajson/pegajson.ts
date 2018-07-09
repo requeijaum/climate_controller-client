@@ -12,32 +12,43 @@ export class PegadorJSON {
     
     {
         
-        this.valor_seguro   = 13;  //precisamos saber qual a faixa de valor seguro para tamanho da string!!!
+        this.valor_seguro   = 64;  //precisamos saber qual a faixa de valor seguro para tamanho da string!!!
         this.JSONpeguei     = {};
-        this.dados          = ""
+        this.dados          = "";
+        
+
     }
 
     public valor_seguro:        number;    
     public JSONpeguei  :        any;
     public dados:               string;
-
-    async pegaJSON(){
-        await this.bluetoothSerial.readUntil("}")     //se não houver delimitador contido no buffer... retornará vazio!
-        .then(
-            (data) => (this.dados = data) , () => (console.log("Erro!"))
-        )
-        .then( () => {
-            if (this.dados.length > this.valor_seguro) { 
-                this.JSONpeguei = JSON.parse(this.dados);
-            }
-        } , () => (console.log("Erro no pegaJSON!")))
-        //.catch( () => this.bluetoothSerial.write("Ocorreu algum erro no pegaJSON()") )
     
-        //não acho legal jogar data direto em global... prefiro mandar parsear direto e retornar pela função
-        return JSON.parse(this.JSONpeguei);
+
+    ab2str(buf) {
+        return String.fromCharCode.apply(null, new Uint16Array(buf)); //acho melhor usar Uint8Array...
+      }
+    
+    str2ab(str) {
+        var buf = new ArrayBuffer(str.length*2); // 2 bytes for each char
+        var bufView = new Uint16Array(buf);
+        for (var i=0, strLen=str.length; i < strLen; i++) {
+          bufView[i] = str.charCodeAt(i);
+        }
+        return buf;
     }
     
-    
+
+    async pegaJSON(){
+        await this.bluetoothSerial.subscribeRawData().subscribe(
+        async data => {
+            async (data) => (this.dados = this.ab2str(data)) 
+            if (this.dados.length > this.valor_seguro) { 
+                this.JSONpeguei = await JSON.parse(this.dados);
+            }
+        }
+        )
+        return this.dados
+    }
 
 }
 

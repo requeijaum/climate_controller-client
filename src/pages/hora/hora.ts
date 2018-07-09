@@ -138,7 +138,7 @@ export class HorarioPage {
 	//	}, 5000);
 			this.global.horaTimer = setInterval(() => {
 
-				console.log("temp.ts - setInterval() funciona!");
+				console.log("hora.ts - setInterval() funciona!");
 
 				this.carregarVars();
 				//alert("pd1: " + this.pd1 + " pd1 aux: " + this.pd1aux + " pd1global: " + this.global.pd1 );
