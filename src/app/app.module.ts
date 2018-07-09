@@ -7,6 +7,7 @@ import { GlobalVariables } from '../providers/globalvars/globalvars';
 
 import { WelcomePage } from '../pages/01bemvindo/01bemvindo';
 import { ConectarPage } from '../pages/02conectar/02conectar';
+import { ConfigPage } from '../pages/configpage/configpage';
 import { TemperaturaPage } from '../pages/temp/temp';
 import { HorarioPage } from '../pages/hora/hora';
 import { DebugPage } from '../pages/debug/debug';
@@ -28,7 +29,8 @@ import { PegadorJSON } from '../providers/pegajson/pegajson';
   declarations: [
     MyApp,
 	WelcomePage,
-	ConectarPage,
+  ConectarPage,
+  ConfigPage,
 	TemperaturaPage,
   HorarioPage,
   DebugPage,
@@ -45,7 +47,8 @@ import { PegadorJSON } from '../providers/pegajson/pegajson';
   entryComponents: [
     MyApp,
     WelcomePage,
-	ConectarPage,
+  ConectarPage,
+  ConfigPage,
 	TemperaturaPage,
   HorarioPage,
   DebugPage,

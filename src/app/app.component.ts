@@ -4,6 +4,7 @@ import { GlobalVariables } from '../providers/globalvars/globalvars';
 
 import { WelcomePage } from '../pages/01bemvindo/01bemvindo';
 import { ConectarPage } from '../pages/02conectar/02conectar';
+import { ConfigPage } from '../pages/configpage/configpage';
 import { TemperaturaPage } from '../pages/temp/temp';
 import { HorarioPage } from '../pages/hora/hora';
 import { DebugPage } from '../pages/debug/debug';
@@ -52,7 +53,8 @@ export class MyApp {
     // set our app's pages
     this.pages = [
 		{ title: 'Controle do Fancoil - HEC'    , component: WelcomePage },
-		{ title: 'Conectar dispositivo'			    , component: ConectarPage },
+    { title: 'Conectar dispositivo'			    , component: ConectarPage },
+    { title: 'Configurar dispositivo'       , component: ConfigPage },
 		{ title: 'Temperatura'					        , component: TemperaturaPage },
 		{ title: 'Horários de acionamento'		  , component: HorarioPage },
 		{ title: 'Pagina de Debug'              , component: DebugPage	},

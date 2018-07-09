@@ -1,0 +1,51 @@
+<ion-header>
+    <ion-navbar>
+      <button ion-button outline menuToggle>
+        <button ion-button outline icon-only>
+                      <ion-icon name="menu">
+                      </ion-icon>
+                  </button>
+      </button>
+      <ion-title>Página de configuração</ion-title>
+    </ion-navbar>
+  </ion-header>
+
+  <ion-content>
+      <h2>Configurar dispositivo</h2>
+
+      <p>Para que o dispositivo funcione corretamente você deve registrar os sinais que seu controle envia para o aparelho de refrigeração.</p>
+        <!-- Acima pode ser um popover de help -->
+      <br/>
+      <ion-card>
+          <ion-card-title> Registre as ações a seguir: </ion-card-title>
+          <ion-card-content>
+            <ion-list>
+                <button ion-item>
+                    Ligar aparelho
+                </button>
+                <button ion-item>
+                    Desligar aparelho
+                </button>
+                <button ion-item>
+                    Aumentar temperatura
+                </button>
+                <button ion-item>
+                    Diminuir temperatura
+                </button>
+            </ion-list>
+          </ion-card-content>
+      </ion-card>
+      <button ion-button outline>
+            Testar ligar
+      </button>
+      <button ion-button outline>
+            Testar desligar
+      </button>
+      <button ion-button outline>
+            Testar aumentar temperatura
+      </button>
+      <button ion-button outline>
+            Testar diminuir temperatura
+      </button>
+
+  </ion-content>
