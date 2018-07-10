@@ -20,17 +20,9 @@
           <ion-card-title> Registre as ações a seguir: </ion-card-title>
           <ion-card-content>
             <ion-list>
-                <button ion-item>
-                    Ligar aparelho
-                </button>
-                <button ion-item>
-                    Desligar aparelho
-                </button>
-                <button ion-item>
-                    Aumentar temperatura
-                </button>
-                <button ion-item>
-                    Diminuir temperatura
+                <button ion-item *ngFor="let p of pages" (click)="entrarNaConfig(p)">
+                    {{p.title}}
+                    <p *ngIf="ligar_setado">verificado</p>
                 </button>
             </ion-list>
           </ion-card-content>

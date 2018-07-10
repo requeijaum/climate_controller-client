@@ -12,6 +12,10 @@ import { TemperaturaPage } from '../pages/temp/temp';
 import { HorarioPage } from '../pages/hora/hora';
 import { DebugPage } from '../pages/debug/debug';
 
+import { LigarPage } from '../pages/ligarpage/ligarpage';
+//import { DesligarPage } from '../pages/configpage/desligarpage/desligarpage';
+//import { TempsPage } from '../pages/configpage/tempspage/tempspage';
+
 //import { CommTestPage } from '../pages/commtest/commtest';
 //import { GridPage } from '../pages/flexbox/flexbox';
 //import { ItemDetailsPage } from '../pages/item-details/item-details';
@@ -34,6 +38,7 @@ import { PegadorJSON } from '../providers/pegajson/pegajson';
 	TemperaturaPage,
   HorarioPage,
   DebugPage,
+  LigarPage,
 	//CommTestPage,
 	//GridPage,
     //ItemDetailsPage,
@@ -52,6 +57,7 @@ import { PegadorJSON } from '../providers/pegajson/pegajson';
 	TemperaturaPage,
   HorarioPage,
   DebugPage,
+  LigarPage,
 	//CommTestPage,
     //GridPage,
 	//ItemDetailsPage,
