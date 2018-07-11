@@ -3,7 +3,7 @@ import { BluetoothSerial } from '@ionic-native/bluetooth-serial';
 import { NavController , NavParams, LoadingController } from 'ionic-angular';
 import { Platform } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
-import { GlobalVariables } from '../../providers/globalvars/globalvars';
+import { GlobalVariables } from '../../../providers/globalvars/globalvars';
 
 @Component({
     selector: 'page-ligar',

@@ -6,7 +6,9 @@ import { Platform } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
 import { GlobalVariables } from '../../providers/globalvars/globalvars';
 
-import { LigarPage } from '../ligarpage/ligarpage';
+import { LigarPage } from './ligarpage/ligarpage';
+import { DesligarPage } from './desligarpage/desligarpage';
+import { TempsPage } from './tempspage/tempspage';
 
 
 @Component({
@@ -16,6 +18,10 @@ import { LigarPage } from '../ligarpage/ligarpage';
 export class ConfigPage {
 
     pages: Array<{title: string, component: any}>;
+
+    Page1 = LigarPage;
+    Page2 = DesligarPage;
+    Page3 = TempsPage;
 
     constructor( public  bluetoothSerial	: BluetoothSerial,
                  public  alertCtrl		: AlertController,
@@ -27,21 +33,12 @@ export class ConfigPage {
                 //public ligarPage: LigarPage
     ){
         platform.registerBackButtonAction( () => { this.voltar(); } , 1 );
-        this.pages = [
-            { title: 'Configuracao do botao de ligar'    , component: LigarPage },
+        this.pages = [                                                                    // Páginas de config
+            { title: 'Configure o botão de ligar'   ,      component: LigarPage },
+            { title: 'Configure o botão de desligar',      component: DesligarPage },
+            { title: 'Configure os sinais de temperatura', component: TempsPage }
         ];
-        this.ligar_setado = false;
-        this.desligar_setado= false;
-        this. aumentar_setado= false;
-        this. diminuir_setado= false;
-        this. passa_pagina= false;
-
     }
-    ligar_setado: boolean;
-    desligar_setado: boolean;
-    aumentar_setado: boolean;
-    diminuir_setado: boolean;
-    passa_pagina: boolean;
     voltar(){
 		this.navCtrl.pop();
 		console.log("Apertou botao de voltar!");
@@ -50,8 +47,42 @@ export class ConfigPage {
     
     entrarNaConfig (page) {
         this.navCtrl.push(page.component);
-        if(page.component == this.pages[0].component) {
-            this.ligar_setado = true;
+        if(page.component == this.Page1) {
+            this.global.checksets.ligar_setado.state = true;   // TESTANDO ICONE E NGIF
         }
+        else if (page.component == this.Page2){
+            this.global.checksets.desligar_setado.state = true;
+        }
+        else if (page.component == this.Page3){
+            this.global.checksets.temps_setado.state = true;
+        }
+    }
+
+    checa(page) {
+        if(page.title == this.global.checksets.ligar_setado.title) {
+            if(this.global.checksets.ligar_setado.state){
+                return true;
+            }    
+            else {
+                return false;
+            }
+        }
+        else if(page.title == this.global.checksets.desligar_setado.title) {
+            if(this.global.checksets.desligar_setado.state){
+                return true;    
+            }    
+            else {
+                return false;
+            }
+        }
+        else if(page.title == this.global.checksets.temps_setado.title) {
+            if(this.global.checksets.temps_setado.state){
+                return true;
+            }    
+            else {
+                return false;
+            }
+        }
+        
     }
 }

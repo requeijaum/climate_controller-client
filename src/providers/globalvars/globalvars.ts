@@ -44,6 +44,7 @@ export class GlobalVariables {
 	public t3				: 	any;
 
 	public p				: 	any;
+	public s                :   number;
 	public tt				:	any;
 
 	public pl1 				: 	string; // e viavel testar como string para resolver problema do 0:00 ?????
@@ -58,6 +59,7 @@ export class GlobalVariables {
 	// Indica se o app está conectado ao dispositivo
 	public bluetooth_connected : boolean;
 	
+	public checksets;
 
 
 
@@ -127,20 +129,38 @@ export class GlobalVariables {
 		this.JSONnovo_typeof;
 
 		this.JSONnovo = {
-			"a":0,
-			"b":0,
 			"m":0,
 			"p":0,
+			"s":0,
 			"pd1": "1200",
 			"pd2": "1700",
 			"pl1": "0700" ,
 			"pl2": "1300",
-			"s":0,
 			"t1":15,
 			"t2":23,
 			"t3":27,
 			"tt":5
 		}
+
+		this.checksets = {
+			'ligar_setado' : {
+			   title:"Configure o botão de ligar",
+			   state: false
+		   },
+		   'desligar_setado' : {
+			   title:"Configure o botão de desligar",
+			   state: false
+		   },
+		   'temps_setado' : {
+			   title:"Configure os sinais de temperatura",
+			   state: false
+		   },
+		   'passa_pagina': {
+			   title:"passa_pagina",
+			   state: false
+		   }
+		}
+
 		this.bluetooth_connected = false;
 
 
@@ -211,6 +231,10 @@ export class GlobalVariables {
 
 	getPresenca(){ return this.p; }
 	putPresenca(p){ this.p = p; }
+
+	//---
+	getStatus() { return this.s; }
+	putStatus(s) { this.s = s; }
 
 	//---
 

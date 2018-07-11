@@ -217,6 +217,7 @@ export class MyApp {
                     this.global.putPD2		(this.global.JSONnovo.pd2);
           
                     this.global.putMask		(this.global.JSONnovo.m);
+                    this.global.putStatus (this.global.JSONnovo.s);
            
                     //this.atualizarJSONnovo_typeof( this.global.getJSONnovo_typeof() ); Aparentemente isso sumiu
           

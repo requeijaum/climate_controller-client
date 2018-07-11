@@ -1,7 +1,7 @@
 <ion-header>
     <ion-navbar>
-      <button ion-button outline menuToggle>
-        <button ion-button outline icon-only>
+      <button ion-button menuToggle>
+        <button ion-button icon-only>
                       <ion-icon name="menu">
                       </ion-icon>
                   </button>
@@ -12,32 +12,22 @@
 
   <ion-content>
       <h2>Configurar dispositivo</h2>
+    
+      <ion-grid>
 
-      <p>Para que o dispositivo funcione corretamente você deve registrar os sinais que seu controle envia para o aparelho de refrigeração.</p>
-        <!-- Acima pode ser um popover de help -->
-      <br/>
-      <ion-card>
-          <ion-card-title> Registre as ações a seguir: </ion-card-title>
-          <ion-card-content>
-            <ion-list>
-                <button ion-item *ngFor="let p of pages" (click)="entrarNaConfig(p)">
-                    {{p.title}}
-                    <p *ngIf="ligar_setado">verificado</p>
-                </button>
-            </ion-list>
-          </ion-card-content>
-      </ion-card>
-      <button ion-button outline>
-            Testar ligar
-      </button>
-      <button ion-button outline>
-            Testar desligar
-      </button>
-      <button ion-button outline>
-            Testar aumentar temperatura
-      </button>
-      <button ion-button outline>
-            Testar diminuir temperatura
-      </button>
+      
+        <p id="configapresentation">Para que o dispositivo funcione corretamente você deve registrar os sinais que seu controle envia para o aparelho de refrigeração.</p>
+            <!-- Acima pode ser um popover de help -->
+        <br/>
+        <ion-card>
+            <ion-card-content>
+                <ion-list>
+                    <button class="button" ion-item *ngFor="let p of pages" (click)="entrarNaConfig(p)" >
+                        {{p.title}} <ion-img id="checkicon" src="assets/imgs/checkicon.png" *ngIf="this.checa(p)"></ion-img><!--<ion-img src="./checkicon.png" id="checkicon" >-->
+                    </button>
+                </ion-list>
+            </ion-card-content>
+        </ion-card>
+    </ion-grid>
 
   </ion-content>
