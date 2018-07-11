@@ -37,6 +37,9 @@ export class GlobalVariables {
 
 	public horaTimer		: any;
 	public tempTimer		: any;
+	public ligarTimer       : any;
+	public desligarTimer    : any;
+	public tempsTimer       : any;
 
 	//eram numbers...
 	public t1				: 	any;
@@ -96,6 +99,9 @@ export class GlobalVariables {
 
 		this.horaTimer;
 		this.tempTimer;
+		this.ligarTimer;
+		this.desligarTimer;
+		this.tempsTimer;
 
 		this.t1 	= 16;
 		this.t2		= 23;			//teste
