@@ -1,3 +1,43 @@
 page-ligar {
+    #nextBtn {
+        text-decoration:none;
+        font-family:'Roboto',sans-serif;
+        font-size: medium;
+        color:#FFFFFF;
+        text-align:center;
+    }
+
+    ion-col {
+		text-align: center;
+	}
+
+	ion-col div {
+		background-color: #f0f5ff;
+		border: 1px solid #f0f5ff;
+		border-radius: 2px;
+		padding: 5px;
+		text-align: center;
+		margin: 8px;
+    }
     
+    ion-icon {
+        padding-left: 10px;
+        font-size: x-large;
+    }
+
+    p {
+        text-align: center;
+		padding: 20px 0 0 10px !important;
+		margin: 0;
+	}
+	
+	h2 {
+		padding: 10px 0 0 10px !important;
+		margin: 8px;
+		font-size: medium;
+    }
+}
+
+.solBtn {
+   margin-top: 2em;
 }

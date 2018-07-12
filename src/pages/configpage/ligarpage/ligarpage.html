@@ -4,9 +4,27 @@
     </ion-navbar>
   </ion-header>
 <ion-content>
+    <h2>
+        Configuraçao do dispositivo: Passo 1
+    </h2>
     <ion-grid>
-        <button ion-button outline>Gravar botão ligar</button>
-        <br/>
-        <button ion-button outline>Testar botão ligar</button>
+        <ion-row>
+            <ion-col>   
+                    <p>
+                        Aperte o botão de gravação, em seguida, pressione o botão de ligar no controle do seu aparelho de refrigeração.
+                    </p>
+                    <button class="solBtn" ion-button outline>Gravar botão ligar</button>
+            </ion-col>
+            <ion-col>
+                    <p>
+                        Aperte o botão de teste e aguarde o processamento do dispositivo.
+                    </p>
+                    <button class="solBtn" ion-button outline>Testar botão ligar</button>
+            </ion-col>  
+        </ion-row>
     </ion-grid>
+
+    <button id="nextBtn" [@btnAnimation] = "this.global.buttonLigarPageState" (click)="proximoPasso()">
+        Próximo passo <ion-icon id="icon-next" name="ios-arrow-forward" ></ion-icon>
+    </button>
 </ion-content>

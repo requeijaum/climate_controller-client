@@ -21,6 +21,8 @@ import { TempsPage } from '../pages/configpage/tempspage/tempspage';
 //import { ItemDetailsPage } from '../pages/item-details/item-details';
 //import { ListPage } from '../pages/list/list';
 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
@@ -48,6 +50,7 @@ import { PegadorJSON } from '../providers/pegajson/pegajson';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     IonicModule.forRoot(MyApp),
   ],
   bootstrap: [IonicApp],

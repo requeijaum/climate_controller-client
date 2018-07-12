@@ -85,6 +85,12 @@ export class GlobalVariables {
 	//debug
 	public debug: number;
 
+	//teste
+	public entrouPagLigarPosSet: boolean;
+	public buttonLigarPageState: any;
+
+	public entrouPagDesligarPosSet: boolean;
+	public buttonDesligarPageState: any;
 
 	constructor(){
 		this.address; //= "00:0D:93:0F:57:E1";
@@ -166,6 +172,13 @@ export class GlobalVariables {
 			   state: false
 		   }
 		}
+
+		//teste
+		this.entrouPagLigarPosSet = false;
+		this.buttonLigarPageState = 'start';
+		this.entrouPagDesligarPosSet = false;
+		this.buttonDesligarPageState = 'start';
+
 
 		this.bluetooth_connected = false;
 
