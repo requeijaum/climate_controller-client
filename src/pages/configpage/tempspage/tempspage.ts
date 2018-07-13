@@ -138,7 +138,7 @@ export class TempsPage {
                                     alert.present();
                                 }
                                 this.atualizaTemps();
-                                this.atualizarTMINColumn();
+                                //this.atualizarTMINColumn();
                             } , 1000);
                                 
                         }
