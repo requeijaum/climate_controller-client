@@ -22,6 +22,7 @@ import { TempsPage } from '../pages/configpage/tempspage/tempspage';
 //import { ListPage } from '../pages/list/list';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MultiPickerModule } from 'ion-multi-picker';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -51,6 +52,7 @@ import { PegadorJSON } from '../providers/pegajson/pegajson';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    MultiPickerModule,
     IonicModule.forRoot(MyApp),
   ],
   bootstrap: [IonicApp],

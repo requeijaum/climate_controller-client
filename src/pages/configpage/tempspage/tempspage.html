@@ -21,19 +21,26 @@
             </ion-row>
             <ion-row>
                     <ion-col class="tmin">
-                        <button ion-button outline block >
+                       <!-- <button ion-button outline block >
         
-                            <ion-datetime displayFormat="s°" pickerFormat="s"  cancelText="CANCELAR" DoneText="OK" [(ngModel)]="event.TMIN">
+                            <ion-datetime displayFormat="D" pickerFormat="D"  cancelText="CANCELAR" DoneText="OK" [(ngModel)]="event.TMIN"> 
                             </ion-datetime>
-        
-                        </button>
+                            
+                        </button>-->
+                        <ion-item>
+                            <ion-multi-picker item-content [multiPickerColumns]="pickerColumns1"></ion-multi-picker>
+                        </ion-item>
                     </ion-col>
         
                     <ion-col class="tmax">
-                        <button ion-button outline block >
-                            <ion-datetime displayFormat="s°" pickerFormat="s"  cancelText="CANCELAR" DoneText="OK" [(ngModel)]="event.TMAX">
+                        <!--<button ion-button outline block >
+                            <ion-datetime displayFormat="D" pickerFormat="D"  cancelText="CANCELAR" DoneText="OK" [(ngModel)]="event.TMAX"> 
                             </ion-datetime>
-                        </button>
+
+                        </button>-->
+                        <ion-item>
+                                <ion-multi-picker item-content [multiPickerColumns]="pickerColumns2"></ion-multi-picker>
+                            </ion-item>
                     </ion-col>
         
                 </ion-row>

@@ -44,6 +44,8 @@ export class TempsPage {
     solicitouGravacao: boolean;
     solicitouTeste: boolean;
     tempaux: any;
+    pickerColumns1: any;
+    pickerColumns2: any;
     constructor (   public bluetoothSerial: BluetoothSerial, 
                     public navCtrl:           NavController,
                     public platform:               Platform,
@@ -51,6 +53,50 @@ export class TempsPage {
                     public global:          GlobalVariables,
                     public loadingCtrl:   LoadingController
                     ) {
+                        this.pickerColumns1 = [ 
+                            {
+                                name: 'Temperatura Minima',
+                                options: [
+                                    { text: '15°', value: '15'},
+                                    { text: '16°', value: '16'},
+                                    { text: '17°', value: '17'},
+                                    { text: '18°', value: '18'},
+                                    { text: '19°', value: '19'},
+                                    { text: '20°', value: '20'},
+                                    { text: '21°', value: '21'},
+                                    { text: '22°', value: '22'},
+                                    { text: '23°', value: '23'},
+                                    { text: '24°', value: '24'},
+                                    { text: '25°', value: '25'},
+                                    { text: '26°', value: '26'},
+                                    { text: '27°', value: '27'},
+                                    { text: '28°', value: '28'},
+                                    { text: '29°', value: '29'}
+                                ]
+                            }];
+                            this.pickerColumns2 = [
+                                {
+                                    name: 'Temperatura Máxima',
+                                    options: [
+                                        { text: '15°', value: '15'},
+                                        { text: '16°', value: '16'},
+                                        { text: '17°', value: '17'},
+                                        { text: '18°', value: '18'},
+                                        { text: '19°', value: '19'},
+                                        { text: '20°', value: '20'},
+                                        { text: '21°', value: '21'},
+                                        { text: '22°', value: '22'},
+                                        { text: '23°', value: '23'},
+                                        { text: '24°', value: '24'},
+                                        { text: '25°', value: '25'},
+                                        { text: '26°', value: '26'},
+                                        { text: '27°', value: '27'},
+                                        { text: '28°', value: '28'},
+                                        { text: '29°', value: '29'},
+                                        { text: '30°', value: '30'}
+                                    ]
+                            }
+                            ]
                         platform.registerBackButtonAction( () => { this.voltar(); } , 1 );
                         this.global.tempsTimer = setInterval( 
                             () => {
@@ -97,10 +143,12 @@ export class TempsPage {
                             } , 1000);
                                 
                         }
+                    
+                        
 
                     public event = { 
-                        TMIN: "17", 
-                        TMAX: "30" 
+                        TMIN: '17', 
+                        TMAX: '30' 
                     }
 
                     public temperaturas = [];
