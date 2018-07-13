@@ -78,7 +78,6 @@ export class TempsPage {
                                 {
                                     name: 'Temperatura Máxima',
                                     options: [
-                                        { text: '15°', value: '15'},
                                         { text: '16°', value: '16'},
                                         { text: '17°', value: '17'},
                                         { text: '18°', value: '18'},
@@ -138,8 +137,8 @@ export class TempsPage {
                                     });
                                     alert.present();
                                 }
-                                this.removeTemps();
-                                this.adicionaTemps();
+                                this.atualizaTemps();
+                                this.atualizarTMINColumn();
                             } , 1000);
                                 
                         }
@@ -153,21 +152,16 @@ export class TempsPage {
 
                     public temperaturas = [];
 
-                    adicionaTemps () {
-                        //alert(this.event.TMIN);
-                        //alert(this.event.TMAX);
+                    atualizaTemps () {
+                        for(var i=0; i<this.temperaturas.length; i++ ) {
+                            if( (this.temperaturas[i] < parseInt(this.event.TMIN)) || (this.temperaturas[i] > parseInt(this.event.TMAX)) ) {
+                                this.temperaturas.splice(i,1);
+                            }
+                        }
                         for(var i=parseInt(this.event.TMIN); i<=parseInt(this.event.TMAX); i++ ) {
                             if(this.temperaturas.indexOf(i.toString()) == -1) {
                                 this.temperaturas.push(i.toString());
                                 this.temperaturas.sort();
-                            }
-                        }
-                    }
-
-                    removeTemps () {
-                        for(var i=0; i<this.temperaturas.length; i++ ) {
-                            if( (this.temperaturas[i] < parseInt(this.event.TMIN)) || (this.temperaturas[i] > parseInt(this.event.TMAX)) ) {
-                                this.temperaturas.splice(i,1);
                             }
                         }
                     }
@@ -233,8 +227,26 @@ export class TempsPage {
                                 
                             } , 6000);
                     }
-
-
+                    temp: any;/*
+                    atualizarTMINColumn () {
+                        // remover o que não é para estar lá
+                        for(var i=0;i<14;i++) {
+                            if(parseInt(this.pickerColumns1.options[i].value) >= parseInt(this.event.TMAX)) {
+                                this.pickerColumns1.options.slice(i,1);
+                            }
+                        }
+                        // adicionar o que deve estar
+                        for(var i=parseInt(this.event.TMIN);i<parseInt(this.event.TMAX);i++) {
+                            this.temp = {
+                                text:  i + '°',
+                                value: i.toString()
+                            }
+                            if(this.pickerColumns1.options.indexOf(this.temp) == -1) {
+                                this.pickerColumns1.options.push(this.temp);
+                                this.pickerColumns1.options.sort();
+                            }
+                        }
+                    }*/
                     voltar(){
                         this.navCtrl.pop();
                         console.log("Apertou botao de voltar!");
