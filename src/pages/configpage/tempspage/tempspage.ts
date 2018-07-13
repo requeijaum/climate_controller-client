@@ -166,8 +166,8 @@ export class TempsPage {
 
                     removeTemps () {
                         for(var i=0; i<this.temperaturas.length; i++ ) {
-                            if(this.temperaturas[i] < parseInt(this.event.TMIN) || this.temperaturas[i] > parseInt(this.event.TMAX)) {
-                                this.temperaturas.splice(this.temperaturas[i].indexOf(),1);
+                            if( (this.temperaturas[i] < parseInt(this.event.TMIN)) || (this.temperaturas[i] > parseInt(this.event.TMAX)) ) {
+                                this.temperaturas.splice(i,1);
                             }
                         }
                     }
