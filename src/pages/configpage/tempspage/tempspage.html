@@ -27,11 +27,10 @@
                             </ion-datetime>
                             
                         </button>-->
-                        <button ion-button outline block >
-                            <ion-item>
-                                <ion-multi-picker item-content [multiPickerColumns]="pickerColumns1" [(ngModel)]="event.TMIN"></ion-multi-picker>
-                            </ion-item>
-                        </button>
+                        <button ion-button outline block ></button>
+                        <ion-item>
+                            <ion-multi-picker item-content [multiPickerColumns]="pickerColumns1" [(ngModel)]="event.TMIN"></ion-multi-picker>
+                        </ion-item>
                     </ion-col>
         
                     <ion-col class="tmax">
@@ -40,11 +39,9 @@
                             </ion-datetime>
 
                         </button>-->
-                        <button ion-button outline block >
                         <ion-item>
                                 <ion-multi-picker item-content [multiPickerColumns]="pickerColumns2" [(ngModel)]="event.TMAX"></ion-multi-picker>
                             </ion-item>
-                        </button>
                     </ion-col>
         
                 </ion-row>
@@ -53,13 +50,13 @@
                         <p>
                             Aperte o botão de gravação, em seguida, pressione o botão para mudar para a temperatura {{temp}}° no controle do seu aparelho de refrigeração.
                         </p>
-                        <button class="solBtn" ion-button outline (click)="enviaSolicitacaoGravacao(temp)">Gravar sinal {{temp}}°</button>
+                        <button class="solBtn" ion-button outline>Gravar sinal {{temp}}°</button>
                 </ion-col>
                 <ion-col>
                         <p>
                             Aperte o botão de teste e aguarde o processamento do dispositivo.
                         </p>
-                        <button class="solBtn" ion-button outline (click)="enviaSolicitacaoTeste(temp)">Testar sinal para {{temp}}°</button>
+                        <button class="solBtn" ion-button outline>Testar sinal para {{temp}}°</button>
                 </ion-col> 
             </ion-row>
         </ion-grid>

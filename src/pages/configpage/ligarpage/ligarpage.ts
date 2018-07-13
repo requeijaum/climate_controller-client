@@ -139,7 +139,7 @@ export class LigarPage {
                     }
                     
                     enviaSolicitacaoTeste() {
-                        if(this.s)
+                        //if(this.s)
                             this.solicitouTeste = true;
                             this.saux = this.s;
                             this.saux += 4;
