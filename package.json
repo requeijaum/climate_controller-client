@@ -23,12 +23,12 @@
     "@angular/platform-browser": "^5.2.11",
     "@angular/platform-browser-dynamic": "^5.2.11",
     "@ionic-native/bluetooth-serial": "^4.7.0",
-    "@ionic-native/core": "4.4.0",
-    "@ionic-native/splash-screen": "4.4.0",
-    "@ionic-native/status-bar": "4.4.0",
-    "@ionic/pro": "1.0.16",
-    "@ionic/storage": "2.1.3",
-    "cordova-android": "^7.1.0",
+    "@ionic-native/core": "^4.4.0",
+    "@ionic-native/splash-screen": "^4.4.0",
+    "@ionic-native/status-bar": "^4.4.0",
+    "@ionic/pro": "^1.0.16",
+    "@ionic/storage": "^2.1.3",
+    "cordova-android": "^7.0.0",
     "cordova-plugin-bluetooth-serial": "^0.4.7",
     "cordova-plugin-device": "^1.1.7",
     "cordova-plugin-ionic-webview": "^1.2.1",
@@ -38,20 +38,20 @@
     "ionic": "^3.20.0",
     "ionic-angular": "^3.9.2",
     "ionic-plugin-keyboard": "^2.2.1",
-    "ionicons": "3.0.0",
+    "ionicons": "^3.0.0",
     "module_name": "^1.0.0",
     "node-sass": "^4.9.2",
     "rxjs": "^5.5.11",
-    "sw-toolbox": "3.6.0",
+    "sw-toolbox": "^3.6.0",
     "zone.js": "^0.8.26"
   },
   "devDependencies": {
     "@angular/cli": "^6.0.8",
     "@ionic/angular": "^4.0.0-alpha.10",
     "@ionic/app-scripts": "^3.1.11",
-    "typescript": "2.4.2"
+    "typescript": "^2.4.2"
   },
-  "description": "An Ionic project",
+  "description": "An Ionic project by @requeijaum",
   "cordova": {
     "plugins": {
       "cordova-plugin-bluetooth-serial": {},
@@ -61,6 +61,8 @@
       "cordova-plugin-splashscreen": {},
       "cordova-plugin-ionic-webview": {}
     },
-    "platforms": []
+    "platforms": [
+      "android"
+    ]
   }
 }
