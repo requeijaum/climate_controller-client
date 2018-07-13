@@ -154,11 +154,12 @@ export class TempsPage {
                     public temperaturas = [];
 
                     adicionaTemps () {
-                        alert(this.event.TMIN);
-                        alert(this.event.TMAX);
-                        for(var i=parseInt(this.event.TMIN); i<parseInt(this.event.TMAX); i++ ) {
+                        //alert(this.event.TMIN);
+                        //alert(this.event.TMAX);
+                        for(var i=parseInt(this.event.TMIN); i<=parseInt(this.event.TMAX); i++ ) {
                             if(this.temperaturas.indexOf(i.toString()) == -1) {
                                 this.temperaturas.push(i.toString());
+                                this.temperaturas.sort();
                             }
                         }
                     }

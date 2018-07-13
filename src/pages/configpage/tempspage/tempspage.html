@@ -28,7 +28,7 @@
                             
                         </button>-->
                         <ion-item>
-                            <ion-multi-picker item-content [multiPickerColumns]="pickerColumns1"></ion-multi-picker>
+                            <ion-multi-picker item-content [multiPickerColumns]="pickerColumns1" [(ngModel)]="event.TMIN"></ion-multi-picker>
                         </ion-item>
                     </ion-col>
         
@@ -39,7 +39,7 @@
 
                         </button>-->
                         <ion-item>
-                                <ion-multi-picker item-content [multiPickerColumns]="pickerColumns2"></ion-multi-picker>
+                                <ion-multi-picker item-content [multiPickerColumns]="pickerColumns2" [(ngModel)]="event.TMAX"></ion-multi-picker>
                             </ion-item>
                     </ion-col>
         
