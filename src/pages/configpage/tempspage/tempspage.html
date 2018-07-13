@@ -27,10 +27,11 @@
                             </ion-datetime>
                             
                         </button>-->
-                        <button ion-button outline block ></button>
-                        <ion-item>
-                            <ion-multi-picker item-content [multiPickerColumns]="pickerColumns1" [(ngModel)]="event.TMIN"></ion-multi-picker>
-                        </ion-item>
+                        <button ion-button outline block >
+                            <ion-item>
+                                <ion-multi-picker item-content [multiPickerColumns]="pickerColumns1" [(ngModel)]="event.TMIN"></ion-multi-picker>
+                            </ion-item>
+                        </button>
                     </ion-col>
         
                     <ion-col class="tmax">
@@ -39,9 +40,11 @@
                             </ion-datetime>
 
                         </button>-->
-                        <ion-item>
-                                <ion-multi-picker item-content [multiPickerColumns]="pickerColumns2" [(ngModel)]="event.TMAX"></ion-multi-picker>
-                            </ion-item>
+                        <button ion-button outline block >
+                            <ion-item>
+                                    <ion-multi-picker item-content [multiPickerColumns]="pickerColumns2" [(ngModel)]="event.TMAX"></ion-multi-picker>
+                                </ion-item>
+                        </button>
                     </ion-col>
         
                 </ion-row>
