@@ -57,42 +57,44 @@ export class TempsPage {
                             {
                                 name: 'Temperatura Minima',
                                 options: [
-                                    { text: '15°', value: '15'},
-                                    { text: '16°', value: '16'},
-                                    { text: '17°', value: '17'},
-                                    { text: '18°', value: '18'},
-                                    { text: '19°', value: '19'},
-                                    { text: '20°', value: '20'},
-                                    { text: '21°', value: '21'},
-                                    { text: '22°', value: '22'},
-                                    { text: '23°', value: '23'},
-                                    { text: '24°', value: '24'},
-                                    { text: '25°', value: '25'},
-                                    { text: '26°', value: '26'},
-                                    { text: '27°', value: '27'},
-                                    { text: '28°', value: '28'},
-                                    { text: '29°', value: '29'}
+                                    { text: '15°', value: '15', disabled: false },
+                                    { text: '16°', value: '16', disabled: false },
+                                    { text: '17°', value: '17', disabled: false },
+                                    { text: '18°', value: '18', disabled: false },
+                                    { text: '19°', value: '19', disabled: false },
+                                    { text: '20°', value: '20', disabled: false },
+                                    { text: '21°', value: '21', disabled: false },
+                                    { text: '22°', value: '22', disabled: false },
+                                    { text: '23°', value: '23', disabled: false },
+                                    { text: '24°', value: '24', disabled: false },
+                                    { text: '25°', value: '25', disabled: false },
+                                    { text: '26°', value: '26', disabled: false },
+                                    { text: '27°', value: '27', disabled: false },
+                                    { text: '28°', value: '28', disabled: false },
+                                    { text: '29°', value: '29', disabled: false },
+                                    { text: '30°', value: '30', disabled: false }
                                 ]
                             }];
                             this.pickerColumns2 = [
                                 {
                                     name: 'Temperatura Máxima',
                                     options: [
-                                        { text: '16°', value: '16'},
-                                        { text: '17°', value: '17'},
-                                        { text: '18°', value: '18'},
-                                        { text: '19°', value: '19'},
-                                        { text: '20°', value: '20'},
-                                        { text: '21°', value: '21'},
-                                        { text: '22°', value: '22'},
-                                        { text: '23°', value: '23'},
-                                        { text: '24°', value: '24'},
-                                        { text: '25°', value: '25'},
-                                        { text: '26°', value: '26'},
-                                        { text: '27°', value: '27'},
-                                        { text: '28°', value: '28'},
-                                        { text: '29°', value: '29'},
-                                        { text: '30°', value: '30'}
+                                        { text: '15°', value: '15', disabled: false },
+                                        { text: '16°', value: '16', disabled: false },
+                                        { text: '17°', value: '17', disabled: false },
+                                        { text: '18°', value: '18', disabled: false },
+                                        { text: '19°', value: '19', disabled: false },
+                                        { text: '20°', value: '20', disabled: false },
+                                        { text: '21°', value: '21', disabled: false },
+                                        { text: '22°', value: '22', disabled: false },
+                                        { text: '23°', value: '23', disabled: false },
+                                        { text: '24°', value: '24', disabled: false },
+                                        { text: '25°', value: '25', disabled: false },
+                                        { text: '26°', value: '26', disabled: false },
+                                        { text: '27°', value: '27', disabled: false },
+                                        { text: '28°', value: '28', disabled: false },
+                                        { text: '29°', value: '29', disabled: false },
+                                        { text: '30°', value: '30', disabled: false }
                                     ]
                             }
                             ]
@@ -138,6 +140,7 @@ export class TempsPage {
                                     alert.present();
                                 }
                                 this.atualizaTemps();
+                                this.atualizaPickers();
                                 //this.atualizarTMINColumn();
                             } , 1000);
                                 
@@ -158,10 +161,32 @@ export class TempsPage {
                                 this.temperaturas.splice(i,1);
                             }
                         }
-                        for(var i=parseInt(this.event.TMIN); i<=parseInt(this.event.TMAX); i++ ) {
+                        for(i=parseInt(this.event.TMIN); i<=parseInt(this.event.TMAX); i++ ) {
                             if(this.temperaturas.indexOf(i.toString()) == -1) {
                                 this.temperaturas.push(i.toString());
                                 this.temperaturas.sort();
+                            }
+                        }
+                    }
+
+                    atualizaPickers () {
+                        let imin, imax;
+                        imin = this.pickerColumns1[0].options.map(x => x.value).indexOf(this.event.TMIN);
+                        imax = this.pickerColumns1[0].options.map(x => x.value).indexOf(this.event.TMAX);
+                        for(var i= imax; i<this.pickerColumns1[0].options.length; i++) {
+                            //alert(i);
+                            //alert(i<this.pickerColumns1[0].options.length);
+                            this.pickerColumns1[0].options[i].disabled = true;
+                        }
+                        for(i = imin; i>=0; i--) {
+                            this.pickerColumns2[0].options[i].disabled = true;
+                        }
+                        for(i= imin;i<imax; i++) {
+                            if(i != imax){
+                                this.pickerColumns1[0].options[i].disabled = false;
+                            }
+                            if(i != imin) {
+                                this.pickerColumns2[0].options[i].disabled = false;
                             }
                         }
                     }

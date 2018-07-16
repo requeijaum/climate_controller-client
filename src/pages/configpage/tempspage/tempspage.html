@@ -53,13 +53,13 @@
                         <p>
                             Aperte o botão de gravação, em seguida, pressione o botão para mudar para a temperatura {{temp}}° no controle do seu aparelho de refrigeração.
                         </p>
-                        <button class="solBtn" ion-button outline>Gravar sinal {{temp}}°</button>
+                        <button class="solBtn" ion-button outline (click)="enviaSolicitacaoGravacao(temp)">Gravar sinal {{temp}}°</button>
                 </ion-col>
                 <ion-col>
                         <p>
                             Aperte o botão de teste e aguarde o processamento do dispositivo.
                         </p>
-                        <button class="solBtn" ion-button outline>Testar sinal para {{temp}}°</button>
+                        <button class="solBtn" ion-button outline (click)="enviaSolicitacaoTeste(temp)">Testar sinal para {{temp}}°</button>
                 </ion-col> 
             </ion-row>
         </ion-grid>
