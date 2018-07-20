@@ -81,6 +81,9 @@ export class LigarPage {
                                                 }]
                                             });
                                             alert.present();
+                                            this.saux = this.s;
+                                            this.saux = 0;
+                                            this.bluetoothSerial.write("\n { \"s\": " + this.saux + " } ");
                                         }
                                         if(this.solicitouTeste && (this.s && 8)) { // Teste do botao ligar foi realizado
                                             this.solicitouTeste;
@@ -101,6 +104,9 @@ export class LigarPage {
                                                 }]
                                             });
                                             alert.present();
+                                            this.saux = this.s;
+                                            this.saux = 0;
+                                            this.bluetoothSerial.write("\n { \"s\": " + this.saux + " } ");
                                         }
                                       } , 1000);
                         }

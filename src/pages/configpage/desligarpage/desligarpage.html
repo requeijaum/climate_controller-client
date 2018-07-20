@@ -13,13 +13,13 @@
                     <p>
                         Aperte o botão de gravação, em seguida, pressione o botão de desligar no controle do seu aparelho de refrigeração.
                     </p>
-                    <button class="solBtn" ion-button outline>Gravar botão desligar</button>
+                    <button class="solBtn" ion-button outline (click)="enviaSolicitacaoGravacao()">Gravar botão desligar</button>
             </ion-col>
             <ion-col>
                     <p>
                         Aperte o botão de teste e aguarde o processamento do dispositivo.
                     </p>
-                    <button class="solBtn" ion-button outline>Testar botão desligar</button>
+                    <button class="solBtn" ion-button outline (click)="enviaSolicitacaoTeste()">Testar botão desligar</button>
             </ion-col>  
         </ion-row>
     </ion-grid>

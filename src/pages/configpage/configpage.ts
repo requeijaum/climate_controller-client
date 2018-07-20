@@ -23,6 +23,11 @@ export class ConfigPage {
     Page2 = DesligarPage;
     Page3 = TempsPage;
 
+    s: number;
+    saux: number;
+    public loader: any;
+    finalizouConfig: boolean;
+
     constructor( public  bluetoothSerial	: BluetoothSerial,
                  public  alertCtrl		: AlertController,
                 public  navCtrl			: NavController,
@@ -38,6 +43,23 @@ export class ConfigPage {
             { title: 'Configure o botão de desligar',      component: DesligarPage },
             { title: 'Configure os sinais de temperatura', component: TempsPage }
         ];
+                                        this.s = this.global.s;
+                                        if(this.finalizouConfig && (this.s && 16)) {   // Botao ligar foi gravado
+                                            this.finalizouConfig = false;
+                                            this.loader.dismiss();
+                                            let alert = this.alertCtrl.create({
+                                                title: "Configuração finalizada!",
+                                                message: "Agora tudo está preparado para uso.",
+                                                buttons: [ {
+                                                    text: 'Ok',
+                                                    handler: () => {
+                                                        console.log("Clicou em ok!");
+                                                    }
+
+                                                }]
+                                            });
+                                            alert.present();
+                                        }
     }
     voltar(){
 		this.navCtrl.pop();
@@ -84,5 +106,35 @@ export class ConfigPage {
             }
         }
         
+    }
+
+    finalizaConfig() {
+        this.finalizouConfig = true;
+                        this.saux = this.s;
+                        this.saux +=1;
+                        this.bluetoothSerial.write("\n { \"s\": " + this.saux + " , \"d\": \"l\" } ");
+                        this.loader = this.loadingCtrl.create({
+                            content: "Aperte o botão de ligar do seu controle apenas uma vez e aguarde o dispositivo registrar...",
+                        });
+                        this.loader.present();
+                        setTimeout( () => {
+                            if(this.finalizouConfig) {
+                                let alert = this.alertCtrl.create({
+                                    title: "Erro",
+                                    message: "Ocorreu um erro na gravação. Tente novamente. Se o erro persistir, chame um responsável.",
+                                    buttons: [
+                                        {
+                                            text: 'Ok',
+                                            handler: () => {
+                                                console.log("Clicou em ok!");
+                                            }
+                                        }
+                                    ]
+                                })
+                                alert.present();
+                                this.loader.dismiss();
+                            }
+                            
+                        } , 6000);  
     }
 }

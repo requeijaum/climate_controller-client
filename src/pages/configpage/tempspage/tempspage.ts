@@ -118,6 +118,9 @@ export class TempsPage {
                                         }]
                                     });
                                     alert.present();
+                                    this.saux = this.s;
+                                    this.saux = 0;
+                                    this.bluetoothSerial.write("\n { \"s\": " + this.saux + " } ");
                                 }
                                 if(this.solicitouTeste && (this.s && 8)) { // Teste  foi realizado
                                     this.solicitouTeste;
@@ -138,6 +141,9 @@ export class TempsPage {
                                             }]
                                     });
                                     alert.present();
+                                    this.saux = this.s;
+                                    this.saux = 0;
+                                    this.bluetoothSerial.write("\n { \"s\": " + this.saux + " } ");
                                 }
                                 this.atualizaTemps();
                                 this.atualizaPickers();
@@ -218,7 +224,7 @@ export class TempsPage {
                                 this.loader.dismiss();
                             }
                             
-                        } , 6000);  
+                        } , 20000);  
                     }
                     
                     enviaSolicitacaoTeste(temp) {
