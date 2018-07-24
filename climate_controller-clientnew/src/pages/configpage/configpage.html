@@ -1,0 +1,34 @@
+<ion-header>
+    <ion-navbar>
+      <button ion-button menuToggle>
+        <button ion-button icon-only>
+                      <ion-icon name="menu">
+                      </ion-icon>
+                  </button>
+      </button>
+      <ion-title>Página de configuração</ion-title>
+    </ion-navbar>
+  </ion-header>
+
+  <ion-content>
+      <h2>Configurar dispositivo</h2>
+    
+      <ion-grid>
+
+      
+        <p id="configapresentation">Para que o dispositivo funcione corretamente você deve registrar os sinais que seu controle envia para o aparelho de refrigeração.</p>
+            <!-- Acima pode ser um popover de help -->
+        <br/>
+        <ion-card>
+            <ion-card-content>
+                <ion-list>
+                    <button class="button" ion-item *ngFor="let p of pages" (click)="entrarNaConfig(p)" >
+                        {{p.title}} <ion-img id="checkicon" src="assets/imgs/checkicon.png" *ngIf="this.checa(p)"></ion-img><!--<ion-img src="./checkicon.png" id="checkicon" >-->
+                    </button>
+                </ion-list>
+            </ion-card-content>
+        </ion-card>
+        <button ion-button-outline>Finalizar configuração.</button>
+    </ion-grid>
+
+  </ion-content>

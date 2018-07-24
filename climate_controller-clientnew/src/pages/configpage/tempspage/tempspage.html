@@ -1,0 +1,70 @@
+<ion-header>
+        <ion-navbar>
+          <ion-title>Configure os sinais de temperatura</ion-title>
+        </ion-navbar>
+      </ion-header>
+    <ion-content>
+        <h2>
+            Configuraçao do dispositivo: Passo Final
+        </h2>
+        <ion-grid>
+            <p>
+                Neste passo é preciso colocar qual a temperatura máxima e mínima alcançáveis pelo seu dispositivo de refrigeração. Para só assim configurar o sinal para cada temperatura.
+            </p>
+            <ion-row>
+                <ion-col class="tmin">
+                    Temperatura mínima alcançável
+                </ion-col>
+                <ion-col id="tmax">
+                    Temperatura máxima alcançável
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                    <ion-col class="tmin">
+                       <!-- <button ion-button outline block >
+        
+                            <ion-datetime displayFormat="D" pickerFormat="D"  cancelText="CANCELAR" DoneText="OK" [(ngModel)]="event.TMIN"> 
+                            </ion-datetime>
+                            
+                        </button>-->
+                        <button ion-button outline block >
+                            <ion-item>
+                                <ion-multi-picker item-content [multiPickerColumns]="pickerColumns1" [(ngModel)]="event.TMIN"></ion-multi-picker>
+                            </ion-item>
+                        </button>
+                    </ion-col>
+        
+                    <ion-col class="tmax">
+                        <!--<button ion-button outline block >
+                            <ion-datetime displayFormat="D" pickerFormat="D"  cancelText="CANCELAR" DoneText="OK" [(ngModel)]="event.TMAX"> 
+                            </ion-datetime>
+
+                        </button>-->
+                        <button ion-button outline block >
+                            <ion-item>
+                                    <ion-multi-picker item-content [multiPickerColumns]="pickerColumns2" [(ngModel)]="event.TMAX"></ion-multi-picker>
+                                </ion-item>
+                        </button>
+                    </ion-col>
+        
+                </ion-row>
+            <ion-row *ngFor="let temp of temperaturas">
+                <ion-col>   
+                        <p>
+                            Aperte o botão de gravação, em seguida, pressione o botão para mudar para a temperatura {{temp}}° no controle do seu aparelho de refrigeração.
+                        </p>
+                        <button class="solBtn" ion-button outline (click)="enviaSolicitacaoGravacao(temp)">Gravar sinal {{temp}}°</button>
+                </ion-col>
+                <ion-col>
+                        <p>
+                            Aperte o botão de teste e aguarde o processamento do dispositivo.
+                        </p>
+                        <button class="solBtn" ion-button outline (click)="enviaSolicitacaoTeste(temp)">Testar sinal para {{temp}}°</button>
+                </ion-col> 
+            </ion-row>
+        </ion-grid>
+    
+        <button id="nextBtn" [@btnAnimation] = "this.global.buttonLigarPageState" (click)="proximoPasso()">
+            Voltar para a página de configuração <ion-icon id="icon-next" name="ios-arrow-forward" ></ion-icon>
+        </button>
+    </ion-content>

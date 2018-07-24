@@ -1,0 +1,10 @@
+
+testaConectado(){
+	if (this.global.name.length < 1) {
+		this.global.conectado = false;
+	}
+
+	if (this.global.name.length > 0) {
+		this.global.conectado = true;
+	}
+}

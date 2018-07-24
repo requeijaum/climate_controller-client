@@ -1,0 +1,58 @@
+	testarCheckboxData(data){
+	//https://stackoverflow.com/questions/34930771/why-is-this-undefined-inside-class-method-when-using-promises
+		
+				Object.keys(data).forEach(function(key) {
+					
+
+					var val = data;
+					console.log("array val = " + JSON.stringify(val));
+					
+					var dias 	= {
+						seg: "true",
+						ter: "true",
+						qua: "true",
+						qui: "true",
+						sex: "true",
+						sab: "true",
+						dom: "true",
+					}
+
+					//console.log("antes de zerar " + JSON.stringify(dias));
+					
+					//zerar valores do objeto this.dias.
+					for( const k in dias ){
+						dias[k] = false;
+					}
+					
+					//console.log("depois de zerar " + JSON.stringify(dias));
+					
+					//ligar valores a cada teste
+					
+					//metodo antigo
+					//if (val == 'seg') {
+					//	dias.seg = true; //isso aqui falha
+					//} else {dias.seg = false}
+
+					for( const k in dias ){
+						for( const x of val ){  //in ou of ?
+							console.log("val=" + val + " k=" + k + " x = " + x + " dias[k]=" + dias[k]);
+							if (x == [k]) {
+								dias[k] = true;
+							}
+							else { 
+								//dias[k] = false; 
+							}
+						}
+					}
+					
+					console.log("dentro daquele array: " + JSON.stringify(dias))
+					
+					//mas náo retorna...
+					//usar Promise?
+					return dias;
+					
+				});
+				
+				//https://stackoverflow.com/questions/43555904/foreach-for-in-not-returning-values
+				//console.log("retornar?: " + JSON.stringify(dias))
+			}

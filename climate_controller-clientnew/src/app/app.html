@@ -1,0 +1,29 @@
+<!--<ion-menu [content]="content">
+
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Menu</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+    <ion-list>
+      <button ion-item *ngFor="let p of pages" (click)="openPage(p)">
+        {{p.title}}
+      </button>
+    </ion-list>
+  </ion-content>
+
+</ion-menu>-->
+<ion-content>
+  <ion-tabs>
+    <ion-tab tabIcon="home" tabTitle="Página Inicial" [root]="tab1"></ion-tab>
+    <ion-tab tabIcon="wifi" tabTitle="Conectar" [root]="tab2"></ion-tab>
+    <ion-tab tabIcon="settings" tabTitle="Configurar" [root]="tab3"></ion-tab>
+    <ion-tab tabIcon="thermometer" tabTitle="Temperatura" [root]="tab4"></ion-tab>
+    <ion-tab tabIcon="clock" tabTitle="Horários" [root]="tab5"></ion-tab>
+    <ion-tab tabIcon="logo-freebsd-devil" tabTitle="DEBUG" [root]="tab6"></ion-tab>
+  </ion-tabs>
+</ion-content>
+
+<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>

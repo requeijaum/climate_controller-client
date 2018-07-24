@@ -1,0 +1,35 @@
+page-config {
+    p {
+		padding: 20px 0 0 10px !important;
+		margin: 0;
+	}
+	
+	h2 {
+		padding: 10px 0 0 10px !important;
+		margin: 8px;
+		font-size: medium;
+	}
+
+	ion-card-header {
+		padding: 10px 0 0 10px !important;
+		margin: 8px;
+		font-size: small;
+	}
+
+	#configapresentation {
+		padding: 20px 0 0 10px !important; 
+		font-size: 15px;
+		margin: 0;
+	}
+
+	.button {
+		font-size: 15px;
+	}
+	
+	#checkicon {
+		background: transparent;
+		max-width: 100%;
+		height: auto;
+		float: right;
+	}
+}

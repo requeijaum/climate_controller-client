@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Conectar dispositivo</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+	<div *ngIf="global.bluetooth_connected"> <!-- <div *ngIf="global.conectado"> --> 
+		<ion-row> Conectado à: {{global.name}} <!-- <br>  Que possui o endereço: {{global.address}} --> </ion-row>	
+	</div>
+
+	<!-- vamos mostrar o global.address no console-->
+	
+	<!-- tentar diminuir a fonte dos elementos da lista -->	
+	<ion-list padding>
+	  <button ion-button block (click)="startScanning()">Procurar dispositivos</button>
+	  <ion-list-header>
+		Dispositivos Pareados
+	  </ion-list-header>
+	  <ion-item *ngFor="let device of pairedDevices">
+			<span (click)="selectDevice(device.address, device.name)">
+				<p>{{device.name}} {{device.address}}</p>
+			</span>
+	  </ion-item>
+	  <button ion-button block (click)="disconnect()">Desconectar</button>
+	  <ion-list-header>
+		Dispositivos Disponíveis
+	  </ion-list-header>
+	  <ion-item *ngFor='let device of unpairedDevices'>
+		<span (click)="selectDevice(device.address, device.name)">
+		  <p>{{device.name}} {{device.address}}</p>
+		</span>
+	  </ion-item>
+	  <ion-spinner name="crescent" *ngIf="gettingDevices"></ion-spinner>
+	</ion-list>
+</ion-content>

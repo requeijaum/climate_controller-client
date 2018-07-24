@@ -1,0 +1,35 @@
+
+
+	//this.testaSemanaEmObjeto(data, this.dias);
+	
+	
+	testaSemanaEmObjeto(arr, obj) {
+		
+		var copy = obj;
+	
+		//zerar valores do objeto this.dias.
+		for( const x in copy ){
+			obj[x] = false;   	//strict mode diz que isso da erro...
+
+		}
+		
+		
+		for (const k in arr) {
+			var dia = arr[k];
+			
+			//strict mode diz que isso da erro...
+			//na hora da build pra android...
+			function checkAvailability(arr, dia) {
+				return arr.some(function(arrDia) {
+					return dia === arrDia;
+				});
+			}
+			
+
+			
+			copy[dia] = true;
+			console.log(dia + " " + checkAvailability(arr, dia));
+			
+			
+		}	
+	}
