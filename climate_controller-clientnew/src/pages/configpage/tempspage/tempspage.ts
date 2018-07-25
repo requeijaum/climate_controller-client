@@ -97,7 +97,7 @@ export class TempsPage {
                                         { text: '30°', value: '30', disabled: false }
                                     ]
                             }
-                            ]
+                            ];
                         platform.registerBackButtonAction( () => { this.voltar(); } , 1 );
                         this.global.tempsTimer = setInterval( 
                             () => {

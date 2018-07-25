@@ -164,12 +164,33 @@
 
 
 	</div>
-	<div *ngIf="!this.global.getBluetoothConectado() || !this.global.JSONvalido">
+	<div *ngIf="!this.global.getBluetoothConectado()">
 		<ion-grid>
 			<ion-row>
-				<h3 style="float: center;">TEM QUE CONECTAR MEU PARÇA TA MALUCO É</h3>
+				<ion-card>
+					<ion-card-header style="text-align: center">
+							<b>ERRO</b>
+					</ion-card-header>
+					<ion-card-content style="text-align: center">
+							TEM QUE CONECTAR MEU PARÇA TA MALUCO É
+					</ion-card-content>
+				</ion-card>
 			</ion-row>
 		</ion-grid>
 		
+	</div>
+	<div *ngIf="this.global.getBluetoothConectado() && !this.global.JSONvalido">
+			<ion-grid>
+					<ion-row>
+						<ion-card>
+							<ion-card-header style="text-align: center">
+								<b>ERRO</b>
+							</ion-card-header>
+							<ion-card-content style="text-align: center">
+									JSON TA INVALIDO
+							</ion-card-content>
+						</ion-card>
+					</ion-row>
+				</ion-grid>
 	</div>
 </ion-content>
